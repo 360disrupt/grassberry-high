@@ -1,0 +1,50 @@
+.advanced {
+  fieldset {
+    padding: 2rem 1rem;
+    padding-bottom: 0;
+    background: aliceblue;
+    hr {
+      border-top: 5px solid white;
+      margin-bottom: 0;
+      margin-left: -1rem;
+      width: 110%;
+    }
+    &.light-orange {
+      background: $light-orange;
+    }
+    &.light-green {
+      background: $light-green;
+    }
+    &.light-pink {
+      background: $light-pink;
+    }
+  }
+
+  .remove {
+    float: left;
+    color: red;
+    font-size: 2rem;
+    cursor:pointer;
+  }
+
+  .strains, .controllers {
+    article:nth-last-of-type(1) {
+      hr {
+        display: none;
+      }
+      fieldset {
+         padding-bottom: 2rem;
+      }
+    }
+
+  }
+
+  input[name="light-duration"] {
+    margin-top: 2rem;
+  }
+
+  .no-sensor {
+    margin-bottom: 1rem;
+  }
+
+}

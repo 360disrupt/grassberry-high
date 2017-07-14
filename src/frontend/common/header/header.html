@@ -1,0 +1,41 @@
+<div>
+  <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Grassberry High</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <!--  <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form> -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="license-days-left" ng-show="headerController.timeLeftInDays > 0"><a ui-sref="root.subscription" title="Find out how to get more time.">{{headerController.timeLeftInDays}} days left</a></li>
+          <li class="license-days-left" uib-tooltip="Check your wifi setup" ng-hide="headerController.timeLeftInDays"><a href="" class="default-cursor"><span class="text-red">No connection to license server!</span></a></li>
+          <li class="license-days-left" uib-tooltip="Check your wifi setup" ng-show="headerController.timeLeftInDays <= 0"><a href="" ng-click="headerController.checkLicense()"><span class="text-red">Out of license!</span></a></li>
+          <li><a href="#">Dashboard</a></li>
+          <li uib-dropdown>
+            <a uib-dropdown-toggle id="setup-dropdown" role="button" aria-haspopup="true" aria-expanded="false">Setup <span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="setup-dropdown">
+              <li><a ui-sref="root.general">General Setup (Wifi, Date)</a></li>
+              <li><a ui-sref="root.quick">Quick Setup</a></li>
+              <li><a ui-sref="root.advanced">Advanced Setup</a></li>
+              <li><a class="text-red" href="" ng-click="headerController.reboot()">Reboot</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+  </nav>
+  <div class="flag patreon">
+    <a href="https://patreon.com/grassberry" target="_blank">SUPPORT THE PROJECT</a>
+  </div>
+  <div class="flag beta" ng-show="showFeedback()">
+    <a ui-sref="root.feedback">BETA - GIVE FEEDBACK</a>
+  </div>
+  <reaper></reaper>
+</div>

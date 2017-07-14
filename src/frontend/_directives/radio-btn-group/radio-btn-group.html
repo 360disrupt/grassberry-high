@@ -1,0 +1,16 @@
+<div class="row radio-btn-group">
+  <div class="form-group col-lg-12" ng-class="class">
+    <label class="table-label" ng-show="label != null && label != ''">{{label}}:</label>
+    <br ng-show="break=='true'"/>
+    <div class="btn-group">
+      <label class="btn btn-primary" ng-model="$parent.model"  ng-repeat="radioOption in radioOptions" uib-btn-radio="radioOption" uncheckable>{{radioOption}}</label>
+    </div>
+    <div ng-show="otherInput != null && otherInput != '' && otherInline != null" class="other-inline">
+        <input type="text" class="form-control" name="other" ng-model="model" placeholder="{{otherInput}}" enter-to-tab/>
+    </div>
+  </div>
+  <div ng-show="otherInput != null && otherInput != '' && otherInline == null" class="form-group other-input col-lg-4" ng-class="{'indent-other':(label != null && label != '')}">
+    <input type="text" class="form-control" name="other" ng-model="model" placeholder="{{otherInput}}" enter-to-tab/>
+  </div>
+  <hr/>
+</div>

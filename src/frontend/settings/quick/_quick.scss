@@ -1,0 +1,42 @@
+.quick {
+  // fieldset {
+  //   padding: 2rem 0;
+  //   padding-bottom: 0;
+  //   background: aliceblue;
+  //   hr {
+  //     border-top: 5px solid white;
+  //     margin-bottom: 0;
+  //   }
+  //   &.light-orange {
+  //     background: $light-orange;
+  //   }
+  //   &.light-green {
+  //     background: $light-green;
+  //   }
+  //   &.light-pink {
+  //     background: $light-pink;
+  //   }
+  // }
+
+  // .strains, .controllers {
+  //   article:nth-last-of-type(1) {
+  //     hr {
+  //       display: none;
+  //     }
+  //     fieldset {
+  //        padding-bottom: 2rem;
+  //     }
+  //   }
+
+  // }
+
+  // input[name="light-duration"] {
+  //   margin-top: 2rem;
+  // }
+  .quick-basic {
+    margin-top: 1.5rem;
+  }
+  .md-button {
+    background-color: aliceblue;
+  }
+}

@@ -1,0 +1,27 @@
+/* Colors */
+$black: lighten(black,20%);
+$white: darken(white,5%);
+$bright-white: white;
+
+$red:rgb(240, 0, 0);
+$blue: #37526A;
+$green: #43A62A;
+$lime: #D1E011;
+$yellow: #e8cb00;
+
+$brownish:rgb(135, 101, 93);
+
+$light-grey: rgb(160, 160, 160);
+$grey: rgb(51, 51, 51);
+$bg-grey: rgb(235,235,235);
+$bg-ultralight-grey: #F9F9F9;
+
+$dark-ice: #a2b6c4;
+$light-orange: rgb(255, 243, 225);
+$light-green: #f0fff3;
+$light-pink: #fdf4f4;
+
+.bg-white {
+  background: white;
+  z-index: 1;
+}

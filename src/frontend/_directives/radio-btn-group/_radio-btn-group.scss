@@ -1,0 +1,28 @@
+$label-width: 150px;
+.table-label {
+  padding-left: 17px;
+  display: inline-block;
+  width: $label-width;
+}
+
+.indent-other {
+  margin-left: $label-width + 4px;
+}
+
+.other-inline {
+  display: inline-block;
+  .indent-other {
+    margin-left: 1rem;
+  }
+}
+
+.other-input {
+  padding-left: 0;
+  &:not(.indent-other) {
+    margin-left:15px;
+  }
+}
+
+br + .btn-group {
+  margin-left: 15px;
+}

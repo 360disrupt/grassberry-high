@@ -1,0 +1,11 @@
+[
+  {
+    "_id":"588a427d617fff11d79b3047",
+    "name":"Main Box",
+    "strains": [],
+    "cycle": "mother",
+    "light": {"output":"588a427d617fff11d79b304e", "durationH":18, "startTime":"2016-11-28T07:30:00.749Z"},
+    "rules":["588a427d617fff11d79b3054", "588a427d617fff11d79b3056", "588a427d617fff11d79b3058"],
+    "displays": ["588a427d617fff11d79b304d"]
+  }
+]

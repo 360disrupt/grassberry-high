@@ -1,0 +1,26 @@
+<div class="reaper" ng-hide="!timeLeftInHours || timeLeftInHours >= 24*3">
+  <div class="row" ng-show="timeLeftInHours && timeLeftInHours < 24*3">
+    <div class="col-xs-12 col-md-8 col-lg-6">
+      <h2>The time with you is awesome...</h2>
+      <p>...but Grassberry High is a hungry project, so you need to feed it.</p>
+      <strong>If your time has run out, you will still be able to see everything but your outputs will not be switched anymore!</strong>
+      <p class="hours-left"><span>{{timeLeftInHours}} hours left</span></p>
+
+      <h2>Those are your options:</h2>
+      <ul>
+        <li>If you haven't used your full trial yet, you can give feedback and extend your life up to 7 days each time you give feedback.</li>
+        <li>If you are a contributor we will talk to the reaper for you. Not sure what to do, drop us an email.</li>
+        <li>You can support the project financial.</li>
+      </ul>
+      <p><em><strong>It costs just a lot to build something great and we want to stay as independent as possible. Help us and it will come back to you 👍.</strong></em></p>
+      <p><i>Please check that the Grassbery High is connected to the internet. Your serial is: {{serial}}</i></p>
+    </div>
+    <div class="col-xs-hide col-md-4 bg-reaper">
+    </div>
+  </div>
+  <div class="row" ng-hide="timeLeftInHours">
+    <h2>Are you online?</h2>
+    <p>No license detected. You need to setup your wifi in order to update your license information!</p>
+    <p>There is no permanent connection required but from time to time we need to stay in contact.</p>
+  </div>
+</div>

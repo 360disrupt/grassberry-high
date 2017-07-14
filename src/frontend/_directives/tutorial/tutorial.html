@@ -1,0 +1,8 @@
+<div class="tutorial" ng-class="{'tutorial-inactive': tutorialActive == false}" ng-show="tutorialTexts.length > 0">
+  <div class="speech-bubble"><p ng-bind-html="tutorialTexts[currentStep]"></p></div>
+  <div class="tutorial-buttons">
+    <button class="btn btn-dark-ice button-back" ng-disabled="currentStep <= 0" ng-click="changeCurrentStep(-1)">Back</button>
+    <button class="btn btn-dark-ice button-next" ng-disabled="currentStep >= tutorialTexts.length-1" ng-click="changeCurrentStep(1)">Next</button>
+  </div>
+  <div class="tutorial-cartoon" ng-click="toggleTutorial()"></div>
+</div>

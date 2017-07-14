@@ -1,0 +1,10 @@
+<div class="check-box-directive">
+  <div class="btn-group hidden-xs hidden-sm" ng-class="inline ? 'display-inline': null">
+    <label class="btn btn-checkbox" ng-class="ngModel == false ? 'btn-danger active' : 'btn-default'" ng-click="make(false)" title="{{titleNo}}">{{titleNo}}</label>
+    <label class="btn btn-checkbox" ng-class="ngModel == true ? 'btn-success active': 'btn-default'" ng-click="make(true)"  title="{{titleYes}}">{{titleYes}}</label>
+  </div>
+  <div class="btn-group hidden-md hidden-lg" ng-class="inline ? 'display-inline': null">
+    <label class="btn btn-checkbox" ng-class="ngModel == true ? 'btn-success active': 'btn-default'" ng-click="make(true)"  title="{{titleYes}}">{{titleYes}}</label>
+    <label class="btn btn-checkbox" ng-class="ngModel == false ? 'btn-danger active' : 'btn-default'" ng-click="make(false)" title="{{titleNo}}">{{titleNo}}</label>
+  </div>
+</div>

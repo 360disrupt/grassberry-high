@@ -1,0 +1,74 @@
+<div class="quick container-last">
+  <div class="background-image"></div>
+  <div class="row">
+    <section class="container bg-white round-card">
+      <md-content class="md-padding" layout-xs="column" layout="row">
+        <div flex-xs flex-gt-xs="50" layout="column">
+          <md-card>
+            <div class="image-wrapper text-center quick-basic">
+              <img ng-src="{{imagePaths.basic}}" class="md-card-image" alt="Washed Out">
+            </div>
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Basic Chamber</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p>
+                The basic chamber uses the following outlets:
+              </p>
+              <ol>
+                <li>Lamp</li>
+                <li>Industry fan</li>
+                <li>Rotating fan</li>
+                <li>Water pump</li>
+              </ol>
+            </md-card-content>
+            <md-card-actions layout="column" layout-align="start">
+              <md-button ng-click="quickController.addChamber()">Clone & Mother</md-button>
+              <md-button ng-click="quickController.addChamber()">Vegetation</md-button>
+              <md-button ng-click="quickController.addChamber()">Bloom</md-button>
+              <md-button ng-click="quickController.addChamber()">Dry</md-button>
+            </md-card-actions>
+          </md-card>
+        </div>
+        <div flex-xs flex-gt-xs="50" layout="column">
+          <md-card>
+            <div class="image-wrapper text-center quick-basic">
+              <img ng-src="{{imagePaths.advanced}}" class="md-card-image" alt="Washed Out">
+            </div>
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Advanced Chamber</span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <p>
+                The basic chamber uses the following outlets:
+              </p>
+              <ol>
+                <li>Lamp</li>
+                <li>Industry fan</li>
+                <li>Rotating fan</li>
+                <li>Water pump</li>
+                <li>Heater</li>
+                <li>Light Mover</li>
+                <li>CO2 Valve</li>
+                <li>Humiditor</li>
+              </ol>
+            </md-card-content>
+            <md-card-actions layout="column" layout-align="start">
+              <md-button ng-click="quickController.addChamber()">Clone & Mother</md-button>
+              <md-button ng-click="quickController.addChamber()">Vegetation</md-button>
+              <md-button ng-click="quickController.addChamber()">Bloom</md-button>
+              <md-button ng-click="quickController.addChamber()">Dry</md-button>
+            </md-card-actions>
+          </md-card>
+
+        </div>
+      </md-content>
+
+
+    </section>
+  </div>
+</div>

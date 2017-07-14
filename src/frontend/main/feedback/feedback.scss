@@ -1,0 +1,48 @@
+.feedback {
+  margin: -3rem auto;
+  padding-top: 9rem;
+  padding-bottom: 5rem;
+  background: url("../assets/images/dia-de-los-muertos-sugar-skull.jpg");
+  background-size: 50%;
+
+  main {
+    h1, h2   {
+      margin-bottom: 1rem;
+    }
+  }
+
+  ol {
+    line-height: 2.5rem;
+    li { font-size: 2rem; }
+  }
+  .container {
+    padding: 3rem;
+  }
+  .bg-transparent-white {
+    background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.75) 80%, rgba(255,255,255,0.65) 90%, rgba(255,255,255,0.55) 95% ,rgba(255,255,255,0) 100%);
+  }
+
+  textarea {
+    min-height: 10rem;
+  }
+
+  .mood {
+    .table-label { width: 188px; }
+
+    .btn-group label {
+      background: transparent;
+      border-color: lightgrey;
+    }
+  }
+
+  @media screen and (max-width: $screen-md) {
+    background-size: 100%;
+  }
+  @media screen and (max-width: $screen-sm) {
+    background-size: 150%;
+  }
+  @media screen and (max-width: $screen-xs) {
+    background-size: 250%;
+  }
+}
+

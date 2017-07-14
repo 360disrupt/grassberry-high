@@ -1,0 +1,55 @@
+/*Basic Styles*/
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  float: none;
+}
+
+.button-wrapper {
+  text-align: center;
+}
+
+.flex-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.noscroll {
+  overflow: hidden;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.ng-invalid-required {
+  @include placeholder($blue);
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.image-wrapper {
+  text-align: center;
+  img {
+    max-width: 100%;
+  }
+}

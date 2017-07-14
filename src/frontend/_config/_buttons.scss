@@ -1,0 +1,79 @@
+/*Buttons*/
+@mixin newButton ($background-color, $text-color, $lighten:false) {
+  margin-top:1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 2.5rem;
+
+  color: $text-color;
+  background-color: $background-color;
+  border-color: darken($background-color, 10%);
+  white-space: normal;
+
+  // padding: 1rem 4rem;
+  &:hover {
+    border-color: darken($background-color, 15%);
+  }
+  &:active, &:focus, &:hover{
+    color:$text-color;
+    @if $lighten == true {
+      background-color: lighten($background-color, 10%);
+    }
+    @else {
+      background-color: darken($background-color, 10%);
+    }
+
+  }
+  &[disabled="disabled"] {
+    opacity: 0.3;
+  }
+
+}
+
+.btn-ultra-huge {
+  font-size: 2rem;
+  padding:1rem 3rem;
+  min-width: 520px;
+}
+
+.btn-full {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.btn-cta {
+  @include newButton($green, #fff, true)
+}
+
+.btn-lime {
+  @include newButton($lime, #000, true)
+}
+
+.btn-red {
+  @include newButton($red, #fff)
+}
+
+.btn-dark-ice {
+  @include newButton($dark-ice, #fff)
+}
+
+button.stripe-button-el {
+  display:none;
+}
+
+@media screen and (max-width: $screen-md) {
+  .btn-ultra-huge {
+    min-width: 0;
+  }
+}
+
+@media screen and (max-width: $screen-sm) {
+  .btn {
+    width: 100%;
+  }
+  .btn-ultra-huge {
+    font-size: 1.5rem;
+  }
+}

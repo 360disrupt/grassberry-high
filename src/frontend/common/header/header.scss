@@ -1,0 +1,85 @@
+.navbar {
+  margin-bottom: 0;
+}
+
+.navbar-inverse .navbar-brand {
+  color: white;
+  font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+  font-weight: bold;
+}
+
+ .dropdown-menu li > a.text-red {
+    color: red;
+  }
+
+.license-days-left {
+  font-style: italic;
+  margin-right: 2rem;
+}
+
+$beta-color: #e800e1;
+$patreon-color: #00dde8;
+
+.flag {
+  z-index: 99;
+  position: fixed;
+  a {
+      font-weight: 600;
+      right: 0;
+      top: 6px;
+      /* margin-left: 50px; */
+      position: relative;
+      display: inline-block;
+      width: 240px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 1rem;
+      padding-left: 2rem;
+      background: #e800e1;
+      color: white;
+      cursor: pointer;
+    &:after{
+      content: "";
+      position: absolute;
+      left: 100%;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      display: inline-block;
+      line-height: 0;
+      border-width: 20px;
+      border-style: solid;
+      border-color: #e800e1 transparent #e800e1 #e800e1;
+    }
+  }
+
+  &.beta {
+    a {
+      top: 60px;
+      background: $beta-color;
+      &:after {
+        border-color: $beta-color transparent $beta-color $beta-color;
+      }
+    }
+  }
+  &.patreon {
+    a {
+      top: 6px;
+      background: $patreon-color;
+      &:after {
+        border-color: $patreon-color transparent $patreon-color $patreon-color;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $screen-lg) {
+  .flag {
+    position: absolute;
+  }
+
+}

@@ -1,0 +1,2 @@
+Add the class `tutorial-step` to each tutorial step in order to highlight the step and jump to the tutorial position. If used in ng-repeat you can use `ng-class` to prevent shwoing the tutorial multiple times.
+`ng-class="{'tutorial-step': $index == 0}"

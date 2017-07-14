@@ -1,0 +1,30 @@
+[
+  {
+    "_id":"588a427d617fff11d79b3054",
+    "device":"fan",
+    "sensor": "588a427d617fff11d79b304a",
+    "output":"588a427d617fff11d79b304f",
+    "forDetector":"temperature",
+    "onValue":30.00,
+    "offValue":20.00,
+    "unit":"C"
+  },
+  {
+    "_id":"588a427d617fff11d79b3056",
+    "device":"fan",
+    "sensor": "588a427d617fff11d79b304a",
+    "output":"588a427d617fff11d79b304f",
+    "forDetector":"humidity",
+    "onValue":70.00,
+    "offValue":60.00,
+    "unit":"RFH"
+  },
+  {
+    "_id":"588a427d617fff11d79b3058",
+    "sensor": "588a427d617fff11d79b304b",
+    "output":"588a427d617fff11d79b3050",
+    "device":"pump",
+    "forDetector":"water",
+    "durationMS":1000
+  }
+]

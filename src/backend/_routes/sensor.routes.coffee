@@ -1,0 +1,63 @@
+BAD_REQUEST = 400
+
+inspect = require('eyespect').inspector({maxLength: null})
+chalk = require('chalk')
+
+routesService = require("./routes.service.js")
+sensorService = require('../sensor/sensor.service.js')
+
+module.exports = (app, passport, user, environment) ->
+  # sensor routes ===============================================================
+  app.get('/broadcastSensors', routesService.clean, (req, res) ->
+    sensorService.broadcastSensors((err) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(success: true)
+    )
+  )
+
+  app.post('/getSensors', routesService.clean, (req, res) ->
+    options = req.body.options || {}
+    sensorService.getSensors(options, (err, sensors) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(sensors: sensors)
+    )
+  )
+
+  app.post('/upsertSensor', routesService.clean, routesService.onShowModeBlocked, (req, res) ->
+    return res.status(BAD_REQUEST).json({ err: "No sensor data" }) if !req.body.sensor?
+    sensorService.upsertSensor(req.body.sensor, (err, success) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(success: success)
+    )
+  )
+
+  app.post('/updateSensorTimeUnit', routesService.clean, routesService.onShowModeBlocked, (req, res) ->
+    options = req.body.options || {}
+    sensorId = req.body.sensorId || null
+    newTimeUnit = req.body.newTimeUnit || null
+    sensorService.updateSensorTimeUnit(sensorId, newTimeUnit, options, (err, sensor) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(sensor: sensor)
+    )
+  )
+
+  app.post('/updateDetectorName', routesService.clean, routesService.onShowModeBlocked, (req, res) ->
+    return res.status(BAD_REQUEST).json({ err: "No new detector name" }) if !req.body.newDetectorName?
+    options = req.body.options || {}
+    detectorId = req.body.detectorId
+    newDetectorName = req.body.newDetectorName
+    sensorService.updateDetectorName(detectorId, newDetectorName, options, (err) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(success: true)
+    )
+  )
+
+  #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  return
+
+

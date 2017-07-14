@@ -1,0 +1,57 @@
+{
+  "stream": true,
+  "allSensors": [],
+  "activeDetectors": [],
+  "series": [],
+  "options": {
+    "scales": {
+      "yAxes": [
+        {
+          "scaleLabel": {"labelString":"Temperature", "display": true, "fontColor":"red"},
+          "id": "y-axis-1",
+          "type": "linear",
+          "display": true,
+          "position": "left",
+          "ticks": {
+            "stepSize": 1
+          }
+        },
+        {
+          "scaleLabel": {"labelString":"Humidity", "display": true, "fontColor":"rgba(0,133,249,1)"},
+          "id": "y-axis-2",
+          "type": "linear",
+          "display": true,
+          "position": "right",
+          "fontColor":"blue",
+          "ticks": {
+            "stepSize": 1
+          }
+        }
+      ],
+      "xAxes": [
+        {
+          "scaleLabel": {"labelString":"Time", "display": true},
+          "id": "x-axis-1",
+          "type": "time",
+          "display": true,
+          "position": "bottom",
+          "ticks": {
+            "autoSkip":true,
+            "maxTicksLimit":20
+          },
+          "time": {
+            "unit":"seconds",
+            "displayFormats": {
+              "seconds": "HH:mm:ss",
+              "minutes": "HH:mm a",
+              "hours": "HH"
+            }
+          }
+
+        }
+      ]
+    },
+    "datasetOverride": [{ "yAxisID": "y-axis-1", "pointBackgroundColor":"rgba(255,0,0,0.5)", "borderColor": "red", "backgroundColor": "rgba(225,0,0,0.2)" }, { "yAxisID": "y-axis-2", "pointBackgroundColor":"rgba(0,133,249,0.5)", "borderColor": "rgba(0,133,249,1)", "backgroundColor": "rgba(0,133,249,0.2)" }]
+  },
+  "data": []
+}

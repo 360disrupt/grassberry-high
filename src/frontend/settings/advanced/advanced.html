@@ -1,0 +1,255 @@
+<div class="advanced container-last">
+  <div class="background-image"></div>
+  <div class="row">
+    <section class="container bg-white round-card" ng-repeat="chamber in advancedController.chambers">
+      <form name="chambersDataForm" mark-required>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Chamber Settings</h3>
+            <p>Configure your chamber here.</em>
+          </div>
+        </div>
+        <input type="hidden" class="tutorial-step" name="tutorial-start"/>
+        <div class="row">
+          <div class="form-group col-lg-4" show-errors>
+            <label>Name</label>
+            <input type="text" class="form-control tutorial-step" name="name" ng-model="chamber.name" placeholder="e.g. Bloombox" ng-minlength="3" enter-to-tab required/>
+            <p class="help-block" ng-if="chambersDataForm.name.$error">Please enter a name for your chamber.</p>
+          </div>
+          <div class="form-group col-lg-4" show-errors>
+            <label>Cycle</label>
+            <select class="form-control tutorial-step" name="cycle" ng-model="chamber.cycle" ng-options="cycleOption.id as cycleOption.name for cycleOption in advancedController.cycleOptions"required></select>
+            <p class="help-block" ng-if="chambersDataForm.cycle.$error">Please enter the cycle of your chamber.</p>
+          </div>
+        </div>
+
+        <div class="strains container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Strains</h3>
+            </div>
+          </div>
+          <div class="row">
+            <fieldset class="col-xs-12 light-green">
+              <article class="strain row" ng-repeat="strain in chamber.strains track by $index">
+
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Name</label>
+                  <input type="text" class="form-control" ng-class="{'tutorial-step': $index == 0}" name="strain" ng-model="strain.name" placeholder="Ak47 x White Widow" ng-minlength="3" ng-change="advancedController.addStrain(chamber)" enter-to-tab required/>
+                </div>
+                <div class="form-group col-lg-4" ng-show="chamber.cycle == 'bloom'">
+                  <label>Days to Harvest</label>
+                  <input type="text" class="form-control" name="days-to-harvest" ng-model="strain.daysToHarvest" placeholder="63" ng-minlength="3" enter-to-tab/>
+                </div>
+                <hr class="col-xs-12"/>
+              </article>
+              <div class="row">
+                <div class="col-lg-4">
+                  <button class="btn btn-dark-ice" ng-click="advancedController.addNewStrain(chamber)">Add another strain</button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="lights container-fluid" ng-hide="chamber.cycle == 'drying'">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Lights</h3>
+            </div>
+          </div>
+          <article class="row light">
+            <fieldset class="col-xs-12 light-orange">
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Light Relais</label>
+                  <select class="form-control tutorial-step" name="light-output-id" ng-model="chamber.light.output._id" ng-options="outputOption._id as outputOption.label for outputOption in advancedController.outputOptions" ng-change="advancedController.assignOutput(chamber.light)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="light-output-name" ng-model="chamber.light.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="advancedController.upsertOutputName(chamber.light.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2" name="light-start-time">
+                  <label>Start Time</label>
+                  <input type="hidden" class="tutorial-step" name="light-start-time"/>
+                  <div uib-timepicker  ng-model="chamber.light.startTime"  hour-step="1" minute-step="15" show-meridian="true"></div>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Duration in hours</label>
+                  <input type="text" class="form-control tutorial-step" name="light-duration" ng-model="chamber.light.durationH" placeholder="18" enter-to-tab/>
+                </div>
+              </div>
+
+            </fieldset>
+          </article>
+        </div>
+
+        <div class="controllers container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Fan</h3>
+            </div>
+          </div>
+          <article class="row water" ng-hide="advancedController.filterDetectors(['co2', 'temperature', 'humidity']).length > 0">
+            <fieldset class="col-xs-12 light-pink no-sensor">
+              <p><strong>No co2, temperature, humidty sensors have been detected. Please assure that all sensors are plugged in correctly.</strong></p>
+            </fieldset>
+          </article>
+          <article class="row controller" ng-repeat="rule in advancedController.filterRules(chamber, ['fan']) track by $index" ng-show="advancedController.filterDetectors(['co2', 'temperature', 'humidity']).length > 0">
+            <fieldset class="col-xs-12">
+              <div class="row">
+                <p class="col-xs-12 remove"><i uib-tooltip="Remove/Clear" tooltip-append-to-body="true" class="fa fa-trash" aria-hidden="true" ng-click="advancedController.removeOrClear(chamber, rule, $index)"></i></p>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Sensor</label>
+                  <select class="form-control" ng-class="{'tutorial-step': $index == 0}" name="rule-sensor-id" ng-model="rule.detectorId" ng-options="detectorOption.detectorId as detectorOption.label for detectorOption in advancedController.filterDetectors(['co2', 'temperature', 'humidity'])"  ng-change="advancedController.refreshSensor(rule)" required>
+                  </select>
+                </div>
+
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Sensor</label>
+                  <input type="text" class="form-control" ng-class="{'tutorial-step': $index == 0}" name="sensor-name" ng-model="rule.detectorName" placeholder="e.g. Tempsensor (Top)" ng-change="advancedController.updateDetectorName(rule)" ng-minlength="3" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2" show-errors>
+                  <label>On-Value</label>
+                  <input type="text" class="form-control tutorial-step" name="rule-value" ng-model="rule.onValue" placeholder="50" enter-to-tab required/>
+                </div>
+                <div class="form-group col-lg-2" show-errors>
+                  <label>Off-Value</label>
+                  <input type="text" class="form-control tutorial-step" name="rule-value" ng-model="rule.offValue" placeholder="50" enter-to-tab required/>
+                </div>
+<!--                 <div class="form-group col-lg-2" show-errors>
+                  <label>Unit</label>
+                  <input type="text" class="form-control tutorial-step" name="unit" ng-model="advancedController.units.temperature" enter-to-tab disabled/>
+                </div> -->
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Fan Relais</label>
+                  <select class="form-control tutorial-step" name="output-id" ng-model="rule.output._id" ng-options="outputOption._id as outputOption.label for outputOption in advancedController.outputOptions" ng-change="advancedController.assignOutput(rule)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Fan Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="output-name" ng-model="rule.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="advancedController.upsertOutputName(rule.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="rules-btn-group">
+                    <h3>Add more rules to this chamber</h3>
+                    <button class="btn btn-dark-ice tutorial-step" name="btn-copy-rule" ng-click="advancedController.addNewRule(chamber, rule)">Copy this rule</button>
+
+                    <button class="btn btn-dark-ice tutorial-step" name="btn-copy-rule" ng-click="advancedController.addNewRule(chamber, 'fan')">Start from Scratch</button>
+                  </div>
+                  <hr/>
+                </div>
+              </div>
+            </fieldset>
+
+          </article>
+        </div>
+
+        <div class="watering" ng-show="chamber.cycle != 'drying'">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Watering</h3>
+            </div>
+          </div>
+          <article class="row water" ng-hide="advancedController.filterDetectors(['water']).length > 0">
+            <fieldset class="col-xs-12 light-pink no-sensor">
+              <p><strong>No water sensor has been detected. Please assure that all sensors are plugged in correctly.</strong></p>
+            </fieldset>
+          </article>
+
+          <article class="row controller" ng-repeat="rule in advancedController.filterRules(chamber, ['pump']) track by $index" ng-show="advancedController.filterDetectors(['water']).length > 0">
+            <fieldset class="col-xs-12 light-pink">
+              <div class="row">
+                <p class="col-xs-12 remove"><i uib-tooltip="Remove/Clear" tooltip-append-to-body="true" class="fa fa-trash" aria-hidden="true" ng-click="advancedController.removeOrClear(chamber, rule, $index)"></i></p>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Water Sensor</label>
+                  <select class="form-control tutorial-step" name="water-sensor-id" ng-model="rule.detectorId" ng-options="detectorOption.detectorId as detectorOption.label for detectorOption in advancedController.filterDetectors(['water'])"  ng-change="advancedController.refreshSensor(rule)" required>
+                  </select>
+                </div>
+
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Sensor</label>
+                  <input type="text" class="form-control tutorial-step" name="water-sensor-name" ng-model="rule.detectorName" placeholder="e.g. Watersensor" ng-change="advancedController.updateDetectorName(rule)" ng-minlength="3" enter-to-tab/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Watering Relais</label>
+                  <select class="form-control tutorial-step" name="water-output-id" ng-model="rule.output._id" ng-options="outputOption._id as outputOption.label for outputOption in advancedController.outputOptions" ng-change="advancedController.assignOutput(rule)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Watering Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="water-output-name" ng-model="rule.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="advancedController.upsertOutputName(rule.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Duration in milliseconds</label>
+                  <input type="text" class="form-control tutorial-step" name="water-duration" ng-model="rule.durationMS" placeholder="18" enter-to-tab required/>
+                </div>
+              </div>
+            </fieldset>
+          </article>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-dark-ice" ng-disabled="advancedController.buttonDisabled == true" ng-click="advancedController.upsertChamber(chamber)">Save Chamber Settings</button>
+          </div>
+        </div>
+      </form>
+      <div class="row" ng-show="chamber._id">
+        <div class="col-xs-12">
+          <a href="" ng-click="advancedController.exportChamber(chamber)">Export</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container bg-white round-card">
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-dark-ice" ng-click="advancedController.addNewChamber()">addNewChamber</button>
+        </div>
+        <div class="col-xs-12">
+          <button class="btn btn-dark-ice" ngf-select ng-model="advancedController.file" ngf-multiple="false" name="file" ngf-pattern="'text/json,application/json'" ngf-accept="'text/csv,application/json'" ngf-max-size="5MB" ngf-change="advancedController.fileChanged()">Import</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>The following sensors / controllers have been detected:</h3>
+        </div>
+        <div class="col-xs-12">
+          <ul>
+            <li ng-repeat="activeDevice in advancedController.activeDevices">
+              <span ng-show="activeDevice.type == 'sensor'"><i class="fa fa-snowflake-o" aria-hidden="true"></i> {{activeDevice.model}} ({{activeDevice.address}})</span>
+              <span ng-show="activeDevice.type == 'output'"><i class="fa fa-plug" aria-hidden="true"></i> {{activeDevice.name}} ({{activeDevice.address}})</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <tutorial tutorial-texts="advancedController.tutorialTexts" compileScope="this"></tutorial>
+  </div>
+</div>

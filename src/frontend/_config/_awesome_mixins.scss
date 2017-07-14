@@ -1,0 +1,44 @@
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin rotate( $degrees ) {
+  -webkit-transform: rotate(#{$degrees}deg);
+  -moz-transform: rotate(#{$degrees}deg);
+  -ms-transform: rotate(#{$degrees}deg);
+  -o-transform: rotate(#{$degrees}deg);
+  transform: rotate(#{$degrees}deg);
+
+  filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=-#{sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+  zoom: 1;
+ }
+
+
+@mixin placeholder( $color ) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: lighten($color, 30%);
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color: lighten($color,30%);
+     opacity:  1;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color: lighten($color,30%);
+     opacity:  1;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+     color: lighten($color,30%);
+  }
+}
+
+@mixin font-awesome-bullet() {
+  font-family: FontAwesome;
+  display: inline-block;
+  margin-left: -1.3em; /* same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}

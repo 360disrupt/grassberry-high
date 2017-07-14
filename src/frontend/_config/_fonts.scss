@@ -1,0 +1,122 @@
+/*Fonts*/
+// @import url(https://fonts.googleapis.com/css?family=Lato:400,300italic,300,400italic,900,900italic);
+// @import url(https://fonts.googleapis.com/css?family=Josefin+Slab:400,400italic);
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Lato-Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Lato-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Lato-Light.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/Lato-Light.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/Lato-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/Lato-Light.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Josefin Slab';
+  src: url('../fonts/JosefinSlab-Regular.ttf')  format('truetype');
+}
+
+
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/glyphicons-halflings-regulart.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/glyphicons-halflings-regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/glyphicons-halflings-regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+$basic-line-height: 1.6rem;
+$base-size: 3.5rem;
+
+body, html{
+  font-size:16px;
+  color:$black;
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  line-height: $basic-line-height;
+}
+h1, h2, {
+  font-family: 'Josefin Slab', serif;
+  margin-bottom: 1rem;
+  margin-top: 3rem;
+  font-weight: 100;
+}
+
+h1 {
+  font-size: $base-size;
+  text-transform: uppercase;
+  padding-top: 0.1rem;
+}
+
+h2 {
+  font-size: 0.66*$base-size;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 0.5*$base-size;
+  font-weight: 100;
+}
+
+h4 {
+  font-weight: 0.33*0.5*$base-size;
+}
+
+
+p, span, a {
+font-size: 1rem;
+
+}
+
+p, span {
+  color:$grey;
+}
+
+.text-blue {
+  color: $blue;
+}
+
+.text-red {
+  color: $red;
+}
+
+.text-bigger {
+  font-size: 1.5rem;
+}
+
+.lead, .lead-first, .lead a {
+  margin-bottom: 20px;
+  line-height: $basic-line-height;
+}
+
+.lead-first {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 0.1rem;
+}
+
+.lead, .lead a {
+  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.underlined {
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-small {
+  font-size: 0.75rem;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}

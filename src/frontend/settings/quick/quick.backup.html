@@ -1,0 +1,219 @@
+<div class="quick container-last">
+  <div class="background-image"></div>
+  <div class="row">
+    <section class="container bg-white round-card" ng-repeat="chamber in quickController.chambers">
+      <form name="chambersDataForm" mark-required>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Chamber Setup</h3>
+            <p>Quick Configure Your Chamber Here</em>
+          </div>
+        </div>
+        <input type="hidden" class="tutorial-step" name="tutorial-start"/>
+        <div class="row">
+          <div class="form-group col-lg-4" show-errors>
+            <label>Name</label>
+            <input type="text" class="form-control tutorial-step" name="name" ng-model="chamber.name" placeholder="e.g. Bloombox" ng-minlength="3" enter-to-tab required/>
+            <p class="help-block" ng-if="chambersDataForm.name.$error">Please enter a name for your chamber.</p>
+          </div>
+        </div>
+
+        <div class="strains container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Strains</h3>
+            </div>
+          </div>
+          <article class="row strain" ng-repeat="strain in chamber.strains track by $index">
+            <fieldset class="light-green">
+              <div class="form-group col-lg-4" show-errors>
+                <label>Name</label>
+                <input type="text" class="form-control" ng-class="{'tutorial-step': $index == 0}" name="strain" ng-model="strain.name" placeholder="Ak47 x White Widow" ng-minlength="3" ng-change="quickController.addStrain(chamber)" enter-to-tab required/>
+              </div>
+              <div class="form-group col-lg-4">
+                <label>Days to Harvest</label>
+                <input type="text" class="form-control" ng-class="{'tutorial-step': $index == 0}" ng-class="{'highlight':quickController.tutorialStep == 3}" name="days-to-harvest" ng-model="strain.daysToHarvest" placeholder="63" ng-minlength="3" enter-to-tab required/>
+              </div>
+              <hr class="col-xs-12"/>
+            </fieldset>
+          </article>
+        </div>
+
+        <div class="lights container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Lights</h3>
+            </div>
+          </div>
+          <article class="row light">
+            <fieldset class="col-xs-12 light-orange">
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Light Relais</label>
+                  <select class="form-control tutorial-step" name="light-output-id" ng-model="chamber.light.output._id" ng-options="outputOption._id as outputOption.label for outputOption in quickController.outputOptions" ng-change="quickController.refreshOutput(chamber.light.output)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="light-output-name" ng-model="chamber.light.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="quickController.updateOutputName(chamber.light.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2" name="light-start-time">
+                  <label>Start Time</label>
+                  <input type="hidden" class="tutorial-step" name="light-start-time"/>
+                  <div uib-timepicker  ng-model="chamber.light.startTime"  hour-step="1" minute-step="15" show-meridian="true"></div>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Duration in hours</label>
+                  <input type="text" class="form-control tutorial-step" name="light-duration" ng-model="chamber.light.durationH" placeholder="18" enter-to-tab/>
+                </div>
+              </div>
+
+            </fieldset>
+          </article>
+        </div>
+
+        <div class="controllers container-fluid">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Fan</h3>
+            </div>
+          </div>
+          <article class="row controller" ng-repeat="rule in chamber.rules track by $index">
+            <fieldset class="col-xs-12">
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Sensor</label>
+                  <select class="form-control" ng-class="{'tutorial-step': $index == 0}" name="rule-sensor-id" ng-model="rule.sensor._id" ng-options="detectorOption._id as detectorOption.label for detectorOption in quickController.filterDetectors(['co2', 'temperature', 'humidity'])"  ng-change="quickController.refreshSensor(rule.sensor)" required>
+                  </select>
+                </div>
+
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Sensor</label>
+                  <input type="text" class="form-control" ng-class="{'tutorial-step': $index == 0}" name="sensor-name" ng-model="rule.sensor.name" placeholder="e.g. Tempsensor (Top)" ng-change="quickController.renameDetector(rule)" ng-minlength="3" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2" show-errors>
+                  <label>On-Value</label>
+                  <input type="text" class="form-control tutorial-step" name="rule-value" ng-model="rule.onValue" placeholder="50" enter-to-tab required/>
+                </div>
+                <div class="form-group col-lg-2" show-errors>
+                  <label>Off-Value</label>
+                  <input type="text" class="form-control tutorial-step" name="rule-value" ng-model="rule.offValue" placeholder="50" enter-to-tab required/>
+                </div>
+                <div class="form-group col-lg-2" show-errors>
+                  <label>Unit</label>
+                  <input type="text" class="form-control tutorial-step" name="rule-unit" ng-model="rule.unit" placeholder="C" enter-to-tab disabled/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Fan Relais</label>
+                  <select class="form-control tutorial-step" name="output-id" ng-model="rule.output._id" ng-options="outputOption._id as outputOption.label for outputOption in quickController.outputOptions" ng-change="quickController.refreshOutput(rule.output)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Fan Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="output-name" ng-model="rule.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="quickController.updateOutputName(rule.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="rules-btn-group">
+                    <h3>Add more rules to this chamber</h3>
+                    <button class="btn btn-dark-ice" ng-click="quickController.addNewRule(chamber, rule)">Copy this rule</button>
+
+                    <button class="btn btn-dark-ice" ng-click="quickController.addNewRule(chamber)">Start from Scratch</button>
+                  </div>
+                  <hr/>
+                </div>
+              </div>
+            </fieldset>
+
+          </article>
+          <span class="tutorial-step"></span>
+        </div>
+
+        <div class="watering">
+          <div class="row">
+            <div class="col-lg-4">
+              <h3>Watering</h3>
+            </div>
+          </div>
+          <article class="row water">
+            <fieldset class="col-xs-12 light-pink">
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Water Sensor</label>
+                  <select class="form-control" name="water-sensor-id" ng-model="chamber.water.sensor._id" ng-options="detectorOption._id as detectorOption.label for detectorOption in quickController.filterDetectors(['water'])"  ng-change="quickController.refreshSensor(chamber.water.sensor)" required>
+                  </select>
+                </div>
+
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Sensor</label>
+                  <input type="text" class="form-control" name="sensor-name" ng-model="chamber.water.sensor.name" placeholder="e.g. Watersensor" ng-change="quickController.renameDetector(chamber.water)" ng-minlength="3" enter-to-tab/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Watering Relais</label>
+                  <select class="form-control tutorial-step" name="water-output-id" ng-model="chamber.water.output._id" ng-options="outputOption._id as outputOption.label for outputOption in quickController.outputOptions" ng-change="quickController.refreshOutput(chamber.water.output)" required>
+                  </select>
+                </div>
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Rename Watering Relais</label>
+                  <input type="text" class="form-control tutorial-step" name="water-output-name" ng-model="chamber.water.output.name" placeholder="e.g. Fan (Left)" ng-minlength="3" ng-change="quickController.updateOutputName(chamber.water.output)" enter-to-tab/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Duration in seconds</label>
+                  <input type="text" class="form-control tutorial-step" name="water-duration" ng-model="chamber.water.durationMS" placeholder="18" enter-to-tab required/>
+                </div>
+              </div>
+
+            </fieldset>
+          </article>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-dark-ice" ng-disabled="quickController.buttonDisabled == true" ng-click="quickController.upsertChamber(chamber)">Save Chamber Settings</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="container bg-white round-card">
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-dark-ice" ng-click="quickController.addNewChamber()">addNewChamber</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>The following sensors / controllers have been detected:</h3>
+        </div>
+        <div class="col-xs-12">
+          <ul>
+            <li ng-repeat="activeDevice in quickController.activeDevices">
+              <span ng-show="activeDevice.type == 'sensor'"><i class="fa fa-snowflake-o" aria-hidden="true"></i> {{activeDevice.model}} ({{activeDevice.address}})</span>
+              <span ng-show="activeDevice.type == 'output'"><i class="fa fa-plug" aria-hidden="true"></i> {{activeDevice.name}} ({{activeDevice.address}})</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+<!--     <tutorial tutorial-texts="quickController.tutorialTexts" compileScope="this"></tutorial> -->
+  </div>
+</div>

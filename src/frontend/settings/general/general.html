@@ -1,0 +1,111 @@
+<div>
+  <div class="main container-last">
+  <div class="background-image"></div>
+    <div class="row">
+
+<!-- DATE AND TIME  -->
+      <section class="container bg-white round-card">
+        <form name="configDatetTimeForm" mark-required>
+          <div class="row">
+            <div class="col-xs-12">
+              <h3>Time Settings</h3>
+            </div>
+            <div class="form-group col-lg-4" show-errors>
+              <label>Region</label>
+              <select class="form-control" name="time-region" ng-model="generalController.system.region" ng-change="generalController.updateRegionTimezones()" ng-options="region as region for region in generalController.regions"></select>
+            </div>
+
+            <div class="form-group col-lg-4" show-errors>
+              <label>Timezone</label>
+              <select class="form-control" name="time-zone" ng-model="generalController.system.timeZone" ng-options="timeZone.name as timeZone.value for timeZone in generalController.regionTimezoneOptions"></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-lg-3">
+              <label>Date & Time</label>
+              <div class="input-group">
+<!--                 <input type="text" class="form-control" name="dateTime" ng-model="generalController.system.dateTime" placeholder="DD.MM.YYYY" required/> -->
+
+                <input type="text" class="form-control" name="dateTime-picker" uib-datepicker-popup="dd.MM.yyyy" placeholder="DD.MM.JJJJ" ng-model="generalController.system.dateTime" is-open="generalController.datepickers.dateTime" ng-required="true" current-text="Today" clear-text="Delete" close-text="Close" datepicker-append-to-body="false">
+
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="generalController.toggleDatepicker('dateTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+
+              <div uib-timepicker ng-model="generalController.system.dateTime"  hour-step="1" minute-step="1" show-meridian="true"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-dark-ice" ng-disabled="generalController.buttonDisabled == true" ng-click="generalController.configureDateTime()">Set Timezone, Date and Time</button>
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+
+<!-- UNITS  -->
+      <section class="container bg-white round-card">
+        <form name="configUnits" mark-required>
+          <div class="row">
+            <div class="col-xs-12">
+              <h3>Unit Settings</h3>
+            </div>
+            <div class="form-group col-lg-4" show-errors>
+              <label>Temperature</label>
+              <select class="form-control" name="temperature" ng-model="generalController.system.units.temperature" ng-options="temperature.key as temperature.label for temperature in generalController.unitOptions.temperature"></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-dark-ice" ng-disabled="generalController.buttonDisabled == true" ng-click="generalController.configureUnits()">Set Units</button>
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+      <section class="container bg-white round-card">
+        <form name="configWifiForm" mark-required>
+          <div class="row">
+            <div class="col-xs-12">
+              <h3>Connect Your Grassberry to Your Wifi</h3>
+              <p>Connecting your Grassberry to your local Wifi makes the url <strong>grassberry.local</strong> accessible to all devices within this wifi network. This will disable the current hotspot.</p>
+              <em>Your Grassberry is secured through a firewall and will not connect to the internet.</em>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-4" show-errors>
+              <label ng-click="generalController.toggleShowManualWifi()">Wifi Name</label>
+              <select ng-hide="generalController.showManualWifi" class="form-control" name="wifi-name" ng-model="generalController.wifi.name" ng-options="wifiOption for wifiOption in generalController.wifiOptions"required></select>
+              <input ng-show="generalController.showManualWifi" type="text" class="form-control" name="wifi-name" ng-model="generalController.wifi.name" placeholder="Wifi Name" ng-minlength="3" enter-to-tab required/>
+              <p class="help-block" ng-if="configDataForm.wifiName.$error">Please enter your wifi name (ssid).</p>
+            </div>
+            <div class="form-group col-lg-4" show-errors>
+              <label>Wifi Password</label>
+              <input type="{{generalController.inputType}}" class="form-control" name="wifi-pass" ng-model="generalController.wifi.pass" placeholder="Wifi Password" ng-minlength="3" enter-to-tab required/>
+              <p class="help-block" ng-if="configDataForm.wifiPass.$error">Please enter your wifi pass.</p>
+            </div>
+            <div class="form-group col-lg-4">
+              <br/>
+              <label>Show Password &nbsp;</label>
+              <input type="checkbox" ng-model="generalController.inputType" ng-true-value="'text'" ng-false-value="'password'">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-dark-ice" ng-disabled="generalController.buttonDisabled == true" ng-click="generalController.configureWifi()">Setup Wifi</button>
+            </div>
+          </div>
+        </section>
+
+      </form>
+    </div>
+  </div>
+</div>

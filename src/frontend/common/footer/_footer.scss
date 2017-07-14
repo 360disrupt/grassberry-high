@@ -1,0 +1,76 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+$footer-height: 12rem;
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  margin-bottom: -$footer-height;
+  padding: 0;
+  &:after {
+    content: "";
+    display: block;
+  }
+}
+
+#footer-wrapper, #wrap:after{
+  height: $footer-height;
+}
+
+#footer-wrapper {
+  background: white;
+  z-index: 2;
+  position: relative;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  text-align: left;
+  padding-top: 1em;
+}
+
+/*Custom Footer Styles*/
+#footer {
+  border-top: 2px solid $light-grey;
+  .copyright {
+    color:black;
+  }
+  .container {
+    margin-top: 1rem;
+  }
+  a {
+    color: gray;
+  }
+  ul {
+    list-style-type: none;
+  }
+  .footer-category {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: $screen-sm) {
+  .footer-category {
+    margin-top: 1rem;
+  }
+  .footer {
+    ul {
+      padding-left: 0;
+    }
+  }
+}
+
+
+@media screen and (max-width: $screen-xs) {
+  .footer {
+    text-align: center;
+
+  }
+}

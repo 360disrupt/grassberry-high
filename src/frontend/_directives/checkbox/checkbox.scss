@@ -1,0 +1,16 @@
+.check-box-directive {
+  display: block;
+  .display-inline {
+    display: inline;
+  }
+
+  @media screen and (max-width: $screen-sm) {
+    .btn-group {
+      width: 100%;
+      label {
+        width: 50%;
+      }
+    }
+  }
+
+}

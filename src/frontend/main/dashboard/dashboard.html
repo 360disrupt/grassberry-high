@@ -1,0 +1,122 @@
+<div>
+  <div class="dashboard container-last">
+  <div class="background-image"></div>
+    <section class="container bg-white round-card" ng-show="dashboardController.chambers.length == 0 && dashboardController.loaded == true">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <h2>No chambers configured</h2>
+          <button class="btn btn-dark-ice" ui-sref="root.advanced">Go to Advanced Setup</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="container bg-white round-card" ng-repeat="chamber in dashboardController.chambers">
+      <main uib-accordion close-others="true">
+
+<!-- GENERAL GROW INFORMATION -->
+        <div class="general-grow">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              <h2>{{chamber.name}}</h2>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-hide="chamber.hidden">
+              <label>Cycle</label>
+              <p>{{chamber.cycle}}, {{chamber.light.durationH}}h starting at {{chamber.light.startTime.format('HH:mm')}} </p>
+
+              <small><em>Current light on/off percentage</em></small>
+              <uib-progress ng-show="chamber.light"><uib-bar ng-repeat="bar in chamber.light.bars track by $index" value="bar.value" type="{{bar.type}}"><span ng-hide="bar.value < 5">{{bar.value}}%</span></uib-bar></uib-progress>
+
+            </div>
+          </div>
+
+          <div class="row" ng-hide="chamber.strains.length == 0">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+              <label>Strain</label>
+              <p><a ng-href="strain.link" ng-repeat="strain in chamber.strains">{{strain.name}}</a></p>
+            </div>
+          </div>
+        </div>
+
+<!-- SENSOR DASHBOARD -->
+        <div class="chart">
+          <div class="row" ng-show="chamber.activeSensors.length > 0">
+            <div class="col-xs-12">
+              <h2 class="text-uppercase">Sensors</h2>
+              <label>Live Stream</label>
+              <checkbox class="live-stream" ng-model="chamber.stream"></checkbox>
+            </div>
+          </div>
+
+          <div ng-repeat="chart in chamber.charts track by $index" ng-show="chamber.activeSensors.length > 0">
+            <div class="chart-loading row" ng-hide="chart.data[0].length > 0">
+              <div class="col-xs-12 col-sm-12 col-md-8 text-center">
+                <p>Chart {{chart.series.join(', ')}} will appear soon.</p>
+                <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+              </div>
+            </div>
+            <div class="row" ng-show="chart.data[0].length > 0">
+              <div class="col-xs-12 col-sm-12 col-md-8">
+                <div class="sensor-chart">
+                  <canvas id="line" class="chart chart-line" chart-data="chart.data" chart-series="chart.series" chart-options="chart.options" chart-dataset-override="chart.options.datasetOverride" chart-click="onClick"></canvas>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-4">
+                <div class="sensor" ng-repeat="sensor in chamber.chart.allSensors">
+                  <div class="detector" ng-repeat="detector in sensor.detectors">
+                    <label>{{detector.name}}</label>
+                    <p>
+                      <i class="fa fa-thermometer-half" ng-if="detector.type=='temperature'"></i>
+                      <i class="fa fa-percent" ng-if="detector.type=='humidity'"></i>
+                      <i class="fa fa-tint" ng-if="detector.type=='water'"></i>
+                      {{detector.currentValue | number : 2 | sensorFilter: detector.type}} {{detector.unit}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-8 text-center time-setting">
+                <div class="btn-group">
+                  <label class="btn btn-primary" ng-model="chart.timeUnit" ng-click="dashboardController.updateSensorTimeUnit(chart, 'seconds')" uib-btn-radio>Seconds</label>
+                  <label class="btn btn-primary" ng-model="chart.timeUnit" ng-click="dashboardController.updateSensorTimeUnit(chart, 'minutes')" uib-btn-radio>Minutes</label>
+                  <label class="btn btn-primary" ng-model="chart.timeUnit" ng-click="dashboardController.updateSensorTimeUnit(chart, 'hours')" uib-btn-radio>Hours</label>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-show="chamber.chart.data[0].length == 0">
+              <em class="col-xs-12">Chart will appear within the next minute</em>
+            </div>
+          </div>
+        </div>
+
+
+<!-- OUTPUTS -->
+        <div class="outputs-wrapper row" ng-show="chamber.allOutputs.length > 0">
+          <div class=col-xs-12 col-sm-12 col-md-6">
+            <h2 class="text-uppercase">Outputs</h2>
+            <ul class="outputs">
+              <li class="output" ng-class="[output.state ? 'on' : 'off', output.device]" ng-repeat="output in chamber.allOutputs">
+                <a ng-click="dashboardController.operateOuptut(output._id, output.state)">{{output.name}} - {{output.state | outputFilter}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+<!-- EVENTS -->
+        <div class="events-wrapper row" ng-show="chamber.events.length > 0">
+          <div class=col-xs-12 col-sm-12 col-md-6">
+            <h2 class="text-uppercase">EVENTS</h2>
+            <div class="events">
+              <ul>
+
+                <li class="info" ng-repeat="event in chamber.events">{{event.output.name || event.output.label}} was switched {{event.state}} at {{dashboardController.convertTimestamp(event.timestamp)}} <em ng-show="event.info != null"><br/>{{event.info}}</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </section>
+  </div>
+</div>

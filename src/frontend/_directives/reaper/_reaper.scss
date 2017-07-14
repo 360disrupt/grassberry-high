@@ -1,0 +1,27 @@
+.reaper {
+  z-index: 98;
+  position: relative;
+  width: 100%;
+  background: white;
+  padding: 4rem 2rem;
+  border-radius: 0 0 1rem 1rem;
+  border: 5px solid #222222;
+
+  .hours-left {
+    margin-top: 2rem;
+    span {
+      color: white;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      background: $red;
+      border-radius: 1rem;
+    }
+  }
+
+  .bg-reaper {
+    background: url(../assets/images/reaper.svg) no-repeat;
+    background-size: contain;
+    display: block;
+    height: 500px
+  }
+}

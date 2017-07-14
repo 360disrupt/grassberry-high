@@ -1,0 +1,13 @@
+.menu {
+
+  .flex-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  section > div {
+    padding: 3rem;
+  }
+
+}

@@ -1,0 +1,24 @@
+{
+  "texts": [
+    "Hi my name is Gerd. Let me help you through the setup. You can hide/show the tutorial by clicking on my body.",
+    "Give your chamber a name. Something beautiful you like to see everyday ;-)",
+    "Set the cycle/mode of this chamber, it may affect future settings.",
+    "Awesome, you got it. Now add the strains you want to grow in that chamber. <strong>After filling the first strain you can add another one.</strong>",
+    "Your relais are numbered from left to right starting with 1. Choose the relais where the light is connected for this chamber.",
+    "You can change the name if you like.",
+    "When shall the light turn on each day? ",
+    "Define how long it should stay on. Recommended is 20h (motherplants), 18h vegetation phase, 12h bloom phase.",
+    "At the <strong>bottom of each sensor you find a label</strong>. Some cases have more than one sensor inside, there you will find more than one label. Start with one.",
+    "Now you can give your <strong>sensor a custom name</strong>. This will make it easier to identify it later. Take something specific e.g. Temperature (Top). There is no need to put the chamber name into the sensor.",
+    "Choose a trigger value. If this value is reached an action is triggered.",
+    "The unit is depended on the senor. I have choosen the unit according to your country.",
+    "Please choose which output is affected if the sensor reaches the defined limit.",
+    "Give the output a name you can recognize. E.g. Lamp (Bloombox).",
+    "You can copy rules to save time or add a completely new rule.",
+    "If you have a watering system, you can choose a sensor, to measure if the soil is too dry.",
+    "You can define a custom name for it aswell.",
+    "Define an output for your pump.",
+    "And choose a name, which is easy to remember.",
+    "Set a time in seconds. This is how long the pump will be turned on. It depends on your current grow stage and pot sizes. If you get it wrong you can change it later."
+  ]
+}

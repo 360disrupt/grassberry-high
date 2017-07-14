@@ -1,0 +1,99 @@
+// base
+// endbase
+.top-m-3 {
+  margin-top: 3rem;
+}
+
+.background-image {
+  background-image: url("../assets/images/tileable_wood_texture.png");
+  background-size: 28%;
+  display: block;
+  filter: grayscale(0.5) hue-rotate(170deg);
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1;
+}
+
+.round-card {
+  position: relative;
+  padding: 3rem;
+  box-shadow: 32px 24px rgba(10,10,10,0.05);
+  border-top-left-radius: 2rem;
+  z-index: 2;
+}
+
+.box-shadow {
+  box-shadow: lightgrey 5px 8px 19px 1px;
+}
+
+.container-last {
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+}
+
+.form-control {
+  font-weight: normal;
+}
+// injector
+// endinjector
+
+html,body {
+  margin:0;
+  padding:0;
+  height:100%; /* needed for container min-height */
+  background-color: $bg-ultralight-grey;
+  color: $brownish;
+}
+
+a {
+  color: $blue;
+  &:hover {
+    color:darken($blue,10%);
+  }
+}
+
+.jumbotron {
+  padding: 20px 0;
+}
+
+.sidebar-right {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+}
+
+.bg-ultralight-grey{
+  background-color: $bg-ultralight-grey;
+}
+
+.bg-white{
+  background-color: $bright-white;
+}
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.bootstrap-dialog-message {
+  color: black;
+}
+
+@media screen and (max-width: $screen-sm) {
+  .row {
+    margin-left:0;
+    margin-right:0;
+  }
+  .round-card {
+    padding: 0;//0.25rem;
+    box-shadow: none;
+    border-top-left-radius: 0;
+    z-index: 2;
+  }
+}

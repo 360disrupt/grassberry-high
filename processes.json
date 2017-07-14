@@ -1,0 +1,15 @@
+{
+    "name"        : "PROD_grassberry-high",
+    "script"      : "dist/server.js",
+    "watch"       : true,
+    "cwd"         : "/home/pi/app",
+    "error_file"  : "/home/pi/app/logs/grassberry-high-error.err",
+    "out_file"    : "/home/pi/app/logs/grassberry-high-out.out",
+    "ignore_watch": ["/home/pi/app/mongodb_data/**/*", "/home/pi/app/logs/**/*", "/home/pi/app/node_modules/**/*", "/home/pi/app/bower_components/**/*", "/home/pi/app/*.tar.gz", "/home/pi/app/dist.new", "/home/pi/app/dist.unzip"],
+    "env": {
+      "NODE_ENV": "production",
+      "PORT_HTTP":"80",
+      "MONGODB_URL":"mongodb://localhost/LOC_gh",
+      "MONGODB_ADMIN":"admin"
+    }
+}

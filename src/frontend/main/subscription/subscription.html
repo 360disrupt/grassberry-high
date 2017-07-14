@@ -1,0 +1,40 @@
+<div class="bg-ultralight-grey">
+  <div class="subscription">
+  <flash-message class="flash-message"></flash-message>
+  <!-- SECTION 1 -->
+    <main class="container container-last bg-transparent-white">
+      <div class="row">
+        <div class="col-xs-12">
+          <article>
+            <h1>Subscribe</h1>
+            <p>It's only 20$ a month and you help us to get the project financed.</p>
+
+            <h2>Advantages</h2>
+              <ul>
+                <li><strong>Amazing Harvests.</strong></li>
+                <li><strong>Premium Support.</strong></li>
+                <li><strong>Good Karma.</strong></li>
+              </ul>
+
+              <form action="/sendSubscription" method="POST">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="pk_test_un4c6mtxhxUXBHZjN9NWangq"
+                  data-image="../assets/images/grassberry-logo-no-bg.png"
+                  data-name="Grassberry High"
+                  data-description="Subscription (cycle 30days)"
+                  data-amount="2000"
+                  data-label="Sign Me Up!">
+                </script>
+                <button class="btn btn-dark-ice" type="submit" ng-show="loaded == true">Subscribe</button>
+              </form>
+
+              <em ng-hide="loaded == true">loading</em>
+
+          </article>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>

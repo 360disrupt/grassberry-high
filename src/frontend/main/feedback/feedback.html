@@ -1,0 +1,61 @@
+<div class="bg-ultralight-grey">
+  <div class="feedback">
+  <flash-message class="flash-message"></flash-message>
+  <!-- SECTION 1 -->
+    <main class="container container-last bg-transparent-white">
+      <div class="row">
+        <div class="col-xs-12">
+          <article>
+            <form name="feedbackForm" mark-required>
+              <h1>Help us</h1>
+              <p>And we will build a better version for you.</p>
+              <p>Also you get extra lifetime for your Grassberry High.</p>
+              <p><a ui-sref="root.subscribe">You can also support the project via subscription.</a></p>
+
+              <h2>Rewards * **</h2>
+                <ul>
+                  <li><strong>We increase your lifetime up to 3 month for a blog post.</strong></li>
+                  <li><strong>Make a quality grow report in a forum and we will increase your lifetime during that time.</strong></li>
+                  <li><strong>We increase your life time up to 1 week for useful feedback.</strong></li>
+                  <li>You can help in another way, tell us and leave some contact details.</li>
+                </ul>
+
+
+              <h3>Be precise, include some meta like, where, what is the issue, when did it occur etc.</h3>
+              <div class="row">
+                <div class="form-group col-lg-4" show-errors>
+                  <label>Type</label>
+                  <select class="form-control" name="type" ng-model="feedbackController.feedback.type" ng-options="typeOption as typeOption for typeOption in feedbackController.typeOptions" required>
+                  </select>
+                  <p class="help-block help-block-immediately" ng-if="feedbackForm.type.$error">Please enter the type of feedback!</p>
+                </div>
+              </div>
+              <div class="row" ng-hide="feedbackController.feedback.type=='Blog' || feedbackController.feedback.type=='Forum'">
+                <div class="form-group col-xs-12 col-md-10" show-errors>
+                  <label>Describe</label>
+                  <textarea class="form-control" name="description" ng-model="feedbackController.feedback.description" placeholder="Be precise" ng-minlength="30" required/>
+                  <p class="help-block help-block-immediately" ng-if="feedbackForm.description.$error.required">Please enter your detailed feedback!</p>
+                  <p class="help-block help-block-immediately" ng-if="feedbackForm.description.$error.minlength">Please type something meaningful!</p>
+                </div>
+              </div>
+              <div class="row" ng-show="feedbackController.feedback.type=='Blog' || feedbackController.feedback.type=='Forum'">
+                <div class="form-group col-xs-12 col-md-10" show-errors>
+                  <label>Url to the Post</label>
+                  <input type="text" class="form-control" name="url" ng-model="feedbackController.feedback.url" placeholder="http://some-forum/xyz" ng-minlength="3" ng-pattern="urlRegex" enter-to-tab required/>
+                  <p class="help-block" ng-if="feedbackForm.url.$error">Please enter a valid url.</p>
+                </div>
+              </div>
+              <radio-btn-group model="feedbackController.feedback.mood" class="mood" label="Your Mood/Urgency" radio-options="feedbackController.radioOptions.mood" break="true"></radio-btn-group>
+
+              <button class="btn btn-dark-ice" ng-click="feedbackController.sendFeedback()">Send Feedback</button>
+
+            </form>
+          </article>
+        </div>
+      </div>
+      <em>* Time depending on the quality</em>
+      <em>** We respect your privacy, no IPs or private information about you is stored, we identify you with your raspberrypi harware id.</em>
+    </main>
+
+  </div>
+</div>
