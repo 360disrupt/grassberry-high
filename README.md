@@ -4,7 +4,7 @@ I developed the code with the focus on bootstraping a protoype as fast as I coul
 Finanical support for the project is always appreciated: [Patreon Campaign](https://www.patreon.com/grassberry)
 
 # License
-The project will be opened up more and more gradually. My main goal is to enable private persons to use this code and to charge commercial entities for it in order to put these funds into the project. I will make this transparent in the future to stop discussions about why this is not yet 100% open source etc. If you have any questions about the license, please feel free to discuss here: [Reddit License Thread](https://www.reddit.com/r/GassberryHigh/comments/6n7ggs/searching_for_a_good_license/)
+The project will be opened up more and more gradually. My main goal is to enable private persons to use this code and to charge commercial entities for it in order to put these funds into the project. I will make this transparent in the future to stop discussions about why this is not yet 100% open source etc. If you have any questions about the license, please feel free to discuss it in our Slack Channel, see below.
 
 Please respect the development of the project and don't put any hacked versions online. This would take away important funds from the project and decrease the speed of development for everyone.
 
