@@ -90,6 +90,12 @@ Install and start a [mongodb instance](https://www.mongodb.com/de).
 
 - NO_CRONS: Disables cronjobs
 
+### Create a simulation set:
+
+1. `mongoexport --db LOC_gh --collection sensordatas -f value --query '{detectorType: "temperature"}' | head -1000 > temperature-simulation.json`
+2. `replace /{ "value" : (.*)\, .* }/ with $1,`
+3. add brackets and ,
+
 
 # Coding Guidlines
 

@@ -23,7 +23,7 @@ class ChirpSensorMock extends SensorMock
           detector.max = 2
           detector.round = true
           detector.change = 10
-          that.seedSensor detector, HISTORY_LENGTH, ->
+          that.seedSensor detector, HISTORY_LENGTH, null, ->
             that.boot (err)->
               that.readSensor()
               next err

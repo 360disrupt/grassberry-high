@@ -19,6 +19,9 @@ class SensorMock extends Sensor
       return callback err
 
 #--------------------------- Simulation Mode ----------------------------------
+  readSensorHistory: (detector, callback)->
+    return callback()
+
   randomNumber: (min,max)->
     Math.floor((Math.random() * max) + min)
 
@@ -33,15 +36,19 @@ class SensorMock extends Sensor
     newValue = Math.round(newValue) if detector.round == true
     return newValue
 
-  seedSensor: (detector, times, callback)->
+  seedSensor: (detector, times, simulatonStack, callback)->
     self = @
-    return callback() if detector.history.length == times
+    return callback() if detector.history.length >= times
     scale = 'seconds' # 'minutes'
     time = moment().subtract(times * @.sensorReadIntervall/1000, scale).add(times-detector.history.length * @.sensorReadIntervall/1000, scale).toDate() #.startOf(scale)
-    detector.currentValue = {x: time, y:@.randSensorValue(detector), seed: true}
+    if simulatonStack?
+      y = simulatonStack[detector.history.length]
+    else
+      y = @.randSensorValue(detector)
+    detector.currentValue = {x: time, y:y, seed: true}
     detector.history.unshift detector.currentValue
     setTimeout ()->
-      self.seedSensor(detector, times, callback)
+      self.seedSensor(detector, times, simulatonStack, callback)
     , 0
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////
