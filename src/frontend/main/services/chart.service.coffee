@@ -155,7 +155,7 @@ angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-n
 #=============================== CRUD ================================
 #=============================== WEBSOCKETS ================================
   $rootScope.$on "socket:sensorData", (event, message) ->
-    console.info "received sensor data", message.payload
+    # console.info "received sensor data", message.payload
     self.updateChartValues message.payload
     return
 
