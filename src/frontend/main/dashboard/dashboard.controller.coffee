@@ -29,7 +29,9 @@ angular.module "dashboard"
       offTime = 100 - onTime - offsetStart
 
       if offTime < 0
+        offsetStart = offsetStart + offTime
         onTime = 100 - offsetStart + offTime
+
 
       bars.push({value:-offTime, type: "on"}) if offTime < 0
       bars.push({value:offsetStart, type: "off"}) if offsetStart > 0
