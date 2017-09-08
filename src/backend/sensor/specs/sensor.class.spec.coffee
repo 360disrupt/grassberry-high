@@ -45,8 +45,8 @@ describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<
 
   describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR PROCESS, WRITE & BROADCAST  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', () ->
     sensor = null
-    beforeEach ()->
-      sensor = new SensorClass(sensorDummies[0])
+    beforeEach (next)->
+      sensor = new SensorClass(sensorDummies[0], next)
 
     it('should be able to get the sensor',  () ->
       receivedSensor = sensor.getSensor()
@@ -145,8 +145,8 @@ describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<
   describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR READ  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', () ->
     sensor = null
     data = []
-    beforeEach ()->
-      sensor = new SensorClass(sensorDummies[0])
+    beforeEach (next)->
+      sensor = new SensorClass(sensorDummies[0], next)
       data = [
         { timestamp: moment().subtract(0.5, 'hours'), value: 10 }
         { timestamp: moment().subtract(0.5, 'minutes'), value: 10 }
@@ -187,8 +187,8 @@ describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<
 
   describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR INIT APPLY  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', () ->
     sensor = null
-    beforeEach ()->
-      sensor = new SensorClass(sensorDummies[0])
+    beforeEach (next)->
+      sensor = new SensorClass(sensorDummies[0], next)
 
     it("should init the sensor",  () ->
       detector = {}
