@@ -228,7 +228,8 @@ exports.chamberDummies = ()->
         durationH: 18,
         output: new ObjectId("588a427d617fff11d79b304e")
       },
-      displays: [ new ObjectId("588a427d617fff11d79b304d") ]
+      displays: [ new ObjectId("588a427d617fff11d79b304d") ],
+      cronjobs:  [ null, null ] #is mocked -> return null
     },
 
     readMainBox: {
@@ -249,7 +250,8 @@ exports.chamberDummies = ()->
       },
       displays: [ new ObjectId("588a427d617fff11d79b304d") ]
       activeSensors: [  ],
-      allOutputs: [  ]
+      allOutputs: [  ],
+      cronjobs: [ ]
     }
   }
 
