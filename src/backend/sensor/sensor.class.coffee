@@ -204,24 +204,29 @@ class Sensor
 
   applyRules: (detector)->
     self = @
-    info = "Because #{detector.currentValue.y.toFixed(2)}"
     for rule in detector.rules
       debugSensorSwitch "Currrent Value: #{detector.currentValue.y}", "rule", inspect rule
-
+      info = "Because #{detector.currentValue.y.toFixed(2)} #{rule.forDetector} was "
       if rule.onValue > rule.offValue #treshld if exceeds
-        statusOn = rule.onValue < detector.currentValue.y
-        statusOff = rule.offValue > detector.currentValue.y
+        if rule.onValue < detector.currentValue.y
+          statusOn = true
+          info += "higher then #{rule.onValue}"
+        else if rule.offValue > detector.currentValue.y
+          statusOff = true
+          info += "lower then #{rule.offValue}"
       else
-        statusOn = rule.onValue > detector.currentValue.y
-        statusOff = rule.offValue < detector.currentValue.y
+        if rule.onValue > detector.currentValue.y
+          statusOn = true
+          info += "lower then #{rule.onValue}"
+        else if rule.offValue < detector.currentValue.y
+          statusOff = true
+          info += "higher then #{rule.offValue}"
 
       if statusOn
-        info += " #{rule.forDetector} was higher then #{rule.onValue}"
         operation = 'switchOn'
         counterOperation = 'switchOff'
         state = 1
       else if statusOff
-        info += " #{rule.forDetector} was lower then #{rule.offValue}"
         operation = 'switchOff'
         counterOperation = 'switchOn'
         state = 0
