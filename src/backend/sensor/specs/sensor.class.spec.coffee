@@ -196,7 +196,7 @@ describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<
       expect(detector.rules.length).toBe(1)
     )
 
-    it("should apply the sensor's rules if it exceed onValue and output is off",  () ->
+    it("should apply the sensor's rules if it is above onValue and output is off (on > off)",  () ->
       detector = {
         currentValue: { y:32 }
         rules: [rulesDummies[0]]
@@ -206,10 +206,29 @@ describe '>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<
       expect(outputServiceStub.operateOutput).toHaveBeenCalled()
     )
 
-    it("should NOT apply the sensor's rules if it NOT exceeds onValue",  () ->
+    it("should NOT apply the sensor's rules if is NOT above onValue",  () ->
       detector = {
         currentValue: { y:28 }
         rules: [rulesDummies[0]]
+      }
+      spyOn(outputServiceStub, 'operateOutput').and.callThrough()
+      sensor.applyRules detector
+      expect(outputServiceStub.operateOutput).not.toHaveBeenCalled()
+    )
+    it("should apply the sensor's rules if it is below onValue and output is off (on < off)",  () ->
+      detector = {
+        currentValue: { y:9 }
+        rules: [rulesDummies[1]]
+      }
+      spyOn(outputServiceStub, 'operateOutput').and.callThrough()
+      sensor.applyRules detector
+      expect(outputServiceStub.operateOutput).toHaveBeenCalled()
+    )
+
+    it("should NOT apply the sensor's rules if it is NOT below onValue (on < off)",  () ->
+      detector = {
+        currentValue: { y:11 }
+        rules: [rulesDummies[1]]
       }
       spyOn(outputServiceStub, 'operateOutput').and.callThrough()
       sensor.applyRules detector

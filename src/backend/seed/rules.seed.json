@@ -10,6 +10,16 @@
     "unit":"C"
   },
   {
+    "_id":"588a427d617fff11d79b3055",
+    "device":"fan",
+    "sensor": "588a427d617fff11d79b304a",
+    "output":"588a427d617fff11d79b304f",
+    "forDetector":"temperature",
+    "onValue":10.00,
+    "offValue":20.00,
+    "unit":"C"
+  },
+  {
     "_id":"588a427d617fff11d79b3056",
     "device":"fan",
     "sensor": "588a427d617fff11d79b304a",
