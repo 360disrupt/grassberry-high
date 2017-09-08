@@ -11,7 +11,7 @@ ObjectId = require('mongoose').Types.ObjectId
 
 testSettings = require('./test.spec-settings.js')
 loggerServiceStub = testSettings.loggerStub()
-seedService = proxyquire(applicationDir + 'backend/seed/seed.js', '../_logger/logger.js': loggerServiceStub)
+seedService = proxyquire(applicationDir + 'backend/seed/seed.js', '../../_logger/logger.js': loggerServiceStub)
 testSettings.connectDB()
 dummies = require(applicationDir + 'backend/_spec-helpers/dummies.js')
 chamberDummies = dummies.chamberDummies()
@@ -20,9 +20,10 @@ comparisonHelper = require(applicationDir + 'backend/_helper/comparison.helper.j
 outputServiceStub = {}
 ruleServiceStub = {}
 cronJobServiceStub = {}
+outputAndSensorBootHelperStub = {}
 i2cServiceMock = require(applicationDir + 'backend/i2c/mocks/i2c.mock.js')
 
-chamberService = proxyquire(applicationDir + 'backend/chamber/chamber.service.js', '../output/output.service.js': outputServiceStub, '../rule/rule.service.js': ruleServiceStub, '../cronjob/cronjob.service.js': cronJobServiceStub, '../i2c/i2c.js': i2cServiceMock)
+chamberService = proxyquire(applicationDir + 'backend/chamber/chamber.service.js', '../output/output.service.js': outputServiceStub, '../rule/rule.service.js': ruleServiceStub, '../cronjob/cronjob.service.js': cronJobServiceStub, '../i2c/i2c.js': i2cServiceMock, '../_helper/ouputAndSensorBoot.helper.js': outputAndSensorBootHelperStub)
 
 outputServiceStub.getOutputState = ()->
   return OUTPUT_OFF
@@ -36,6 +37,9 @@ cronJobServiceStub.removeCronjobs = (cronjobs)->
 
 cronJobServiceStub.createCronjob = (createCronjob, callback)->
   return callback null, null
+
+outputAndSensorBootHelperStub.bootSensorsAndOutputs = (bootOptions, callback)->
+  return callback null
 
 describe('>>>>>>>>>>>>>>>>>>>>>>>>>  CHAMBER FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', () ->
   beforeAll (done)->
