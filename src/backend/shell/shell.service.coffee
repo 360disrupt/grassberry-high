@@ -49,7 +49,9 @@ exports.getWifiOptions = (callback)->
 
 exports.configureWifi = (wifi, callback)->
   return callback "Not able to do this on #{process.env.OS}" if process.env.OS == 'MAC OSX'
-  return callback "Please provide wifi name and pass" if !wifi?.name? && !wifi.pass?
+  return callback "Please provide wifi name and pass" if !wifi?.name?
+
+  wifi.pass = "" if !wifi.pass?
 
   commands = []
 
