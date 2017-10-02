@@ -9,6 +9,7 @@ angular.module 'tsd.reaper', ['mySerialService', 'mySystemService']
         systemService.getSystem().then (system)->
           timeLeftInHours = moment(system.validTill).diff(moment(), 'hours') if system?.validTill?
           scope.timeLeftInHours = timeLeftInHours if timeLeftInHours?
+          scope.serial = system.serial
           return
 #///////////////////////////////////////////////////////////////////////////////////////////
         return
