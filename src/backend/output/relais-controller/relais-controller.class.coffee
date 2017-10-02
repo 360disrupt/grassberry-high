@@ -26,6 +26,11 @@ class RelaisController
     @.i2c1 = require('../../i2c/i2c.js').getI2cBus()
     @.currentState = 0x00
     @.address = RELAIS_CONTROLLER_ADDRESS
+    if process.env.RELAIS_MAPPING?
+      @.addressMapping = process.env.RELAIS_MAPPING.split(',').map (entry)->
+        return parseInt(entry)
+    else
+      @.addressMapping = process.env.RELAIS_MAPPING || [8, 6, 4, 2, 7, 5, 3, 1] #relais are position diff. to outlets
     @.bootRelaisController (err)->
       logger.error if err?
 
@@ -39,9 +44,8 @@ class RelaisController
 
   switchRelais: (command, address, callback)->
     self = @
-    addressMapping = [8, 6, 4, 2, 7, 5, 3, 1] #[8, 6, 4, 2, 7, 5, 3, 1] #relais are position diff. to outlets
-    debugRelais "MAPPED #{address} => #{addressMapping[address-1]}"
-    address = addressMapping[address-1]
+    debugRelais "MAPPED #{address} => #{@.addreSsmapping[address-1]}"
+    address = @.addreSsmapping[address-1]
     #1 = R1, 2 = R2, 4 = R3, R1+R2+R3 = 7
     amount = Math.pow(2, address-1)
     debugRelais "state #{@.currentState} address #{address} 2^#{address-1} = amount #{amount}"
