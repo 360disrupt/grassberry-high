@@ -31,11 +31,13 @@ class Sensor
     that = @
     @._id = options._id || throw new Error("Id is required")
     @.model = options.model || throw new Error("Model is required")
-    @.address = options.address || throw new Error("Address is required")
     throw new Error("At least one detector is required") if !options.detectors? || options.detectors.length == 0
     @.detectors = options.detectors
 
-    @.i2c1 = require('../i2c/i2c.js').getI2cBus()
+    if options.technology == 'i2c'
+      @.i2c1 = require('../i2c/i2c.js').getI2cBus()
+      @.address = options.address || throw new Error("Address is required")
+
     @.sensorReadIntervall = 1000 #read sensor each s
     @.sensorPushIntervall = 5000 #push sensor each 5s
     @.sensorWriteIntervall = 5000 #write sensor each 5s

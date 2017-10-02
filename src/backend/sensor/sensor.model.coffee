@@ -12,9 +12,11 @@ detectorSchema = {
 }
 
 sensorSchema = mongoose.Schema({
-  address: Number,
+  address: Number, #I2C & BLE sensor
+  uuid: String, #BLE sensor
   model: String,
   detectors: [detectorSchema]
+  technology: String #I2C or BLE
 })
 
 exports.getSchema = ()-> sensorSchema

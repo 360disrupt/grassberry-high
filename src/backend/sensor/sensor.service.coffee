@@ -15,7 +15,10 @@ else
   HDC1000Sensor = require('./hdc1000-sensor.class.js')
   MHZ16Sensor = require('./mhz-16-sensor.class.js')
 
+SensorTagSensor = require('./sensor-tag.class.js')
+
 SensorModel = require('./sensor.model.js').getModel()
+
 
 i2c = require('../i2c/i2c.js')
 
@@ -34,8 +37,8 @@ exports.bootSensors = (options, callback)->
       (sensor, next)->
         return next() if !!~_.findIndex(self.sensors, { 'address': sensor.address }) #if already in stack
         debugSensorBoot "Sensor #{sensor.address} #{sensor.model} is active: #{i2c.adressInActiveDevices sensor.address}"
-        if i2c.adressInActiveDevices sensor.address
-          newSensor = null
+        newSensor = null
+        if sensor.technology == 'i2c' && i2c.adressInActiveDevices sensor.address
           switch sensor.model
             when 'chirp'
               new ChirpSensor sensor, (err, newSensor)->
@@ -47,6 +50,14 @@ exports.bootSensors = (options, callback)->
                 addSensor newSensor, next
             when 'mhz16'
               newSensor = new MHZ16Sensor sensor, (err, newSensor)->
+                return next err if err?
+                addSensor newSensor, next
+            else
+              return next()
+        else if sensor.technology == 'ble'
+          switch sensor.model
+            when 'sensorTag'
+              newSensor = new SensorTagSensor sensor, (err, newSensor)->
                 return next err if err?
                 addSensor newSensor, next
             else
