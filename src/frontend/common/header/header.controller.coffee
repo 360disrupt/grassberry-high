@@ -20,10 +20,11 @@ angular.module "header", ['websockets', 'myAuthUserService', 'ui.bootstrap', 'ts
 
     @.checkLicense = ()->
       systemService.checkLicense().then (system)->
-        self.updateDaysLeft system
+        self.system = system
+        self.updateDaysLeft()
 
-    @.updateDaysLeft = (system)->
-      timeLeftInDays = moment(system.validTill).diff(moment(), 'days') if system?.validTill?
+    @.updateDaysLeft = ()->
+      timeLeftInDays = moment(self.system.validTill).diff(moment(), 'days') if self.system?.validTill?
       self.timeLeftInDays = timeLeftInDays if timeLeftInDays?
 
     @.reboot = ()->
@@ -53,7 +54,8 @@ angular.module "header", ['websockets', 'myAuthUserService', 'ui.bootstrap', 'ts
 
 
     systemService.getSystem().then (system)->
-      self.updateDaysLeft system
+      self.system = system
+      self.updateDaysLeft()
     @.getUser()
 #//////////////////////////////////////////////////////////////////////////////////////////////
     return
