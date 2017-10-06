@@ -22,5 +22,6 @@ exports.bootSensorsAndOutputs = (options, callback)->
       return next() if options.noCrons == true
       return next() if process.env.NO_CRONS?
       debugBoot "-->Booting Cronjobs<--"
+      cronjobService.stopCronjobs()
       cronjobService.launchCronjobs next
     callback

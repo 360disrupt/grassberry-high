@@ -181,6 +181,6 @@ exports.upsertChamber = (upsertChamber, callback)->
         debugChamberSetup "upsertedChamberErr", err
         return callback err
       debugChamberSetup "upsertedChamber", upsertedChamber
-      bootOptions = { noCrons: true }
+      bootOptions = { }
       outputAndSensorBootHelper.bootSensorsAndOutputs bootOptions, ->
       return callback null, upsertedChamber
