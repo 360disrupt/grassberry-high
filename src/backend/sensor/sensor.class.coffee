@@ -249,12 +249,11 @@ class Sensor
             logger.error err if err?
 
           #if a duration exists, counter rule is applied
-          if rule.durationMs?
+          if rule.durationMSOn?
             setTimeout ()->
-              #TODO save event state in db => e.g. in case of power shortcut during watering
               outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
                 logger.error err if err?
-            , durationMs
+            , rule.durationMSOn
     return
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////

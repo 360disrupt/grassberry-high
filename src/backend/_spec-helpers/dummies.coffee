@@ -120,7 +120,7 @@ exports.chamberDummies = ()->
           "device": "pump",
           "detectorId": "5954ba2ac72d410b37118381",
           "forDetector": "water",
-          "durationMS": 1000,
+          "durationMSOn": 1000,
           "__v": 0
         }
       ],

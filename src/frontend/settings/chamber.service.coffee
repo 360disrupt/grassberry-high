@@ -131,7 +131,7 @@ angular.module("myChamberService", ['ngLodash']).service("chamberService", ($htt
       chamber.water.output.name = "Pump"
       chamber.water.sensor._id = "588a427d617fff11d79b304b"
       chamber.water.sensor.name = "Water Sensor"
-      chamber.water.durationMS = "30"
+      chamber.water.durationMSOn = "30"
 
     if !chamber.displays?
       chamber.displays = ["588a427d617fff11d79b304d"]

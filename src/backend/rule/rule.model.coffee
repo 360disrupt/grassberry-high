@@ -10,7 +10,7 @@ ruleSchema = mongoose.Schema({
   forDetector: String,
   offValue: Number,
   onValue: Number,
-  durationMS: Number
+  durationMSOn: Number #switch on for a duration if treshold is met
   sensor: {
     type: ObjectId,
     ref: 'Sensor',

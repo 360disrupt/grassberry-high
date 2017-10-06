@@ -35,6 +35,6 @@
     "output":"588a427d617fff11d79b3050",
     "device":"pump",
     "forDetector":"water",
-    "durationMS":1000
+    "durationMSOn":1000
   }
 ]
