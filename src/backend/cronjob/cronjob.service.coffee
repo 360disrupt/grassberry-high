@@ -68,12 +68,23 @@ exports.launchCronjobs = (callback)->
           outputService.operateOutput cronjob.output._id, cronjob.action, info, null, (err)->
             logger.error err if err?
         () ->
-          # console.log 'cron xyz'
+          debugCronjobs "stopped Cronjobs #{@.cronTime.source}"
         true
         'Europe/Amsterdam'#http://momentjs.com/timezone/ #TODO TIMEZONE & LANGUAGE SETTING
       )
       cronjobs.push newCronjob
+      self.stopCronjobs ->
     return callback null, true
+
+exports.stopCronjobs = ()->
+  for index in [cronjobs.length-1..0] by -1
+    cronjobs[index].stop()
+    cronjobs.splice(index,1)
+  return
+
+exports.getActiveCronjobs = ()->
+  return cronjobs
+
 
 exports.createCronjob = (cronjob, callback)->
   newCronjob = new CronjobModel(cronjob)

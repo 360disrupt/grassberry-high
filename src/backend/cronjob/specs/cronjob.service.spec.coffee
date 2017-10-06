@@ -30,6 +30,22 @@ describe('>>>>>>>>>>>>>>>>>>>>>>>>>  CRONJOB FUNCTIONS  <<<<<<<<<<<<<<<<<<<<<<<<
     cronjobService.bootStatus cronjobDummies
     expect(outputServiceStub.operateOutput).toHaveBeenCalled()
   )
+
+  it('should be able to create cronjobs from DB',  (done) ->
+    spyOn(cronjobService, 'bootStatus')
+
+    cronjobService.launchCronjobs (err, success)->
+      expect(err).toBe(null)
+      expect(success).toBe(true)
+      expect(cronjobService.bootStatus).toHaveBeenCalled()
+      done()
+  )
+
+
+  it('should be able to stop cronjobs',  () ->
+    cronjobService.stopCronjobs()
+    expect(cronjobService.getActiveCronjobs().length).toBe(0)
+  )
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 )
 return
