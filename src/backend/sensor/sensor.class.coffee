@@ -209,7 +209,10 @@ class Sensor
     for rule in detector.rules
       debugSensorSwitch "Currrent Value: #{detector.currentValue.y}", "rule", inspect rule
       info = "Because #{detector.currentValue.y.toFixed(2)} #{rule.forDetector} was "
-      if rule.onValue > rule.offValue #treshld if exceeds
+      if rule.device == 'pump' && rule.onValue > detector.currentValue.y #pumps are triggered when water level is below 2 (moist)
+        statusOn = true
+        info = "Because soil was dry."
+      else if rule.onValue > rule.offValue #treshld if exceeds
         if rule.onValue < detector.currentValue.y
           statusOn = true
           info += "higher then #{rule.onValue}"
@@ -244,7 +247,7 @@ class Sensor
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
           return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
-          return null if rule.device == 'pump' && (!rule.durationMs? || !rule.durationMBlocked?)
+          return null if rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)
           debugSensorSwitch "SWITCHED #{operation}"
           #if different operate the output
           outputService.operateOutput rule.output, operation, info, detector._id, (err)->

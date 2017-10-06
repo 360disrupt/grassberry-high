@@ -19,8 +19,8 @@ class ChirpSensorMock extends SensorMock
     super options, (err)->
       async.eachSeries that.detectors,
         (detector, next)->
-          detector.min = 0
-          detector.max = 2
+          detector.min = 1
+          detector.max = 3
           detector.round = true
           detector.change = 10
           that.seedSensor detector, HISTORY_LENGTH, null, ->

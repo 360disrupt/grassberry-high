@@ -49,7 +49,9 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
       chamber.rules = [] if !chamber.rules?
       if typeof newRule == 'string'
         newRule = {sensor:{}, output: {}, device: newRule}
-        newRule.durationMBlocked = 60 if newRule.device == 'pump'
+        if newRule.device == 'pump'
+          newRule.durationMBlocked = 60
+          newRule.onValue = 2 #below moist -> dry
       else
         newRule = JSON.parse JSON.stringify newRule
         delete newRule._id

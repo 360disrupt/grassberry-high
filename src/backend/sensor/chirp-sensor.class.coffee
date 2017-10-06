@@ -36,8 +36,8 @@ class ChirpSensor extends Sensor
 
   translateToHuman: (waterLevel)->
     waterLevel = Math.round waterLevel
-    return "No valid waterlevel" if !waterLevel? || !WATERLEVELS[waterLevel]?
-    return WATERLEVELS[waterLevel]
+    return "No valid waterlevel" if !waterLevel? || !WATERLEVELS[waterLevel-1]?
+    return WATERLEVELS[waterLevel-1]
 
   readSensor: ()->
     self = @
@@ -45,7 +45,7 @@ class ChirpSensor extends Sensor
       @.i2c1.readByte self.address, CMD_READ_WATER_LEVEL, (err, waterLevel) ->
         console.log chalk.bgRed err if err?
         if !err? && waterLevel?
-          debugSensorChrip "WATERLEVEL: #{self.translateToHuman waterLevel} #{moment().format('hh:mm DD-MM-YYYY')}"
+          debugSensorChrip "WATERLEVEL: #{waterLevel} #{self.translateToHuman waterLevel} #{moment().format('hh:mm DD-MM-YYYY')}"
           self.processSensorValue(self.detectors[0], waterLevel, ->)
         setTimeout ()->
           self.readSensor()

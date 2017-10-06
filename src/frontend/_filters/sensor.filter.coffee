@@ -7,11 +7,11 @@ angular.module 'tsd.sensor', []
       switch sensorType
         when 'water'
           switch input
-            when "2,00"
+            when "3,00"
               return 'Wet'
-            when "1,00"
+            when "2,00"
               return 'Moist'
-            when "0,00"
+            when "1,00"
               return 'Dry'
             else
               return input
