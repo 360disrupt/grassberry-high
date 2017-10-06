@@ -17,7 +17,7 @@ RxLVL       = 0x09 << 3
 exports.open = (bus, callback)->
   bus = {
     scan: (callback)->
-      devices = [64, 77, 32] #humidty/temp, co2, relais controller
+      devices = [64, 77, 32, 33] #humidty/temp, co2, relais controller
       return callback null, devices
 
     readByte: (address, command, callback)->
