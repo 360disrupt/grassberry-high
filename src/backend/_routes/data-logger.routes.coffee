@@ -19,6 +19,15 @@ module.exports = (app, passport, user, environment) ->
       return res.json(events: events)
   )
 
+  app.post('/clearEvents', routesService.clean, (req, res) ->
+    filterClearEvents = req.body.filterReadEvents || {}
+    optionsClearEvents = req.body.optionsReadEvents || {}
+    dataLoggerService.clearEvents filterClearEvents, optionsClearEvents, (err) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json({success: true})
+  )
+
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return
 

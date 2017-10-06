@@ -65,5 +65,8 @@ class DataLogger
       logger.error err if err?
       return callback()
 
+  clearEvents: (filterClearEvents, options, callback)->
+    EventModel.remove({}).exec callback
+
 #///////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = DataLogger

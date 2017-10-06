@@ -16,6 +16,18 @@ angular.module("myDataService", ['websockets']).service("dataService", ($http, $
         console.error "Could not read events", response
         return []
 
+  @.clearEvents = (filterReadEvents, optionsReadEvents)->
+    $http
+      url: "/clearEvents"
+      method: "POST"
+      data:
+        filterReadEvents: filterReadEvents
+        optionsReadEvents: optionsReadEvents
+    .then (response) ->
+      if response.data.err?
+        console.error "Could not read events", response
+      return null
+
 #////////////////////////////////////////////////////////////////////
   return
 )

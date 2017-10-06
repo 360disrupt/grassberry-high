@@ -70,6 +70,14 @@ angular.module "dashboard"
       dataService.readEvents(filterReadEvents, optionsReadEvents).then (events)->
         chamber.events = events
 
+    @.clearEvents = (chamber)->
+      filterClearEvents = {}
+      optionsClearEvents = {}
+      dataService.readEvents(filterClearEvents, optionsClearEvents).then ->
+        chamber.events = []
+        return
+
+
     #------------------------------- Chamber------------------------------
     @.operateOuptut = (id, state)->
       if state == 0

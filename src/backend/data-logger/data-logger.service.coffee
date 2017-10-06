@@ -8,3 +8,4 @@ DataLogger = require('./data-logger.class.js')
 dataLogger = new DataLogger()
 
 exports.readEvents = dataLogger.readEvents
+exports.clearEvents = dataLogger.clearEvents
