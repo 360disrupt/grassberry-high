@@ -12,6 +12,7 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
     @.timer = null
     @.activeDevices = []
     @.units = { temperature: 'celsius' }
+    @.blockedTillOptions = [{ value: 1, label:'1 minute' }, { value: 15, label:'15 minutes' }, { value: 30, label:'30 minutes' }, { value: 60, label:'1 hour' }, { value: 60*24, label:'1 day' }]
     #=============================== TUTORIAL ================================
     @.tutorialTexts = []
     $resource('./frontend/settings/advanced/advanced-tutorial.json').get (data)->
@@ -48,6 +49,7 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
       chamber.rules = [] if !chamber.rules?
       if typeof newRule == 'string'
         newRule = {sensor:{}, output: {}, device: newRule}
+        newRule.durationMBlocked = 60 if newRule.device == 'pump'
       else
         newRule = JSON.parse JSON.stringify newRule
         delete newRule._id

@@ -44,6 +44,9 @@ exports.getOutputById = (id, callback)->
       return callback null, output
   return callback "No ouptut with this ID"
 
+exports.getActiveOutputs = ()->
+  return @.outputs
+
 exports.getOutputState = (id)->
   selectedOutput = @.outputs.filter (output)-> output._id.toString() == id.toString()
   return null if selectedOutput.length == 0
@@ -87,6 +90,13 @@ exports.operateOutput = (outputId, operation, info, detectorId, callback)->
         output[operation] info, detectorId, next
   ], callback
 
+
+exports.blockOutput = (outputId, blockedTill, callback)->
+  self.getOutputById outputId, (err, output)->
+    return callback err if err?
+    output.blockedTill = moment().add(blockedTill, 'minutes')
+    debugOutput "#{output.device} #{outputId} is blocked till #{output.blockedTill.format('HH:mm DD.MM.YYYY')}"
+    return callback null, output
 
 #/////////////////////////////////////// only admin ///////////////////////////////////////////////
 exports.operateRelayController = (command, address)->

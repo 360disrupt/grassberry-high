@@ -243,6 +243,8 @@ class Sensor
         debugSensorSwitch output.name, "on #{rule.onValue} off #{rule.offValue} State change: #{output.state != state}"
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
+          return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
+          return null if rule.device == 'pump' && (!rule.durationMs? || !rule.durationMBlocked?)
           debugSensorSwitch "SWITCHED #{operation}"
           #if different operate the output
           outputService.operateOutput rule.output, operation, info, detector._id, (err)->
@@ -250,10 +252,15 @@ class Sensor
 
           #if a duration exists, counter rule is applied
           if rule.durationMSOn?
-            setTimeout ()->
-              outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
-                logger.error err if err?
-            , rule.durationMSOn
+            outputService.blockOutput rule.output, rule.durationMBlocked, (err)->
+              if err? #in case of error revert to prevent water damage
+                outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
+                  logger.error err if err?
+              else
+                setTimeout ()->
+                  outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
+                    logger.error err if err?
+                , rule.durationMSOn
     return
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////

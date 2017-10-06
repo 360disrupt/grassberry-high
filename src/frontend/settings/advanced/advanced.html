@@ -206,6 +206,11 @@
                   <label>Duration in milliseconds</label>
                   <input type="text" class="form-control tutorial-step" name="water-duration" ng-model="rule.durationMSOn" placeholder="18" enter-to-tab required/>
                 </div>
+                <div class="form-group col-lg-6">
+                  <label>Blocked for time <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="For safety reasons the trigger is blocked for a certain time to allow the water to soak into the medium."></i></label>
+                  <select class="form-control tutorial-step" name="water-sensor-blocked-till" ng-model="rule.durationMBlocked" ng-options="blockedTillOption.value as blockedTillOption.label for blockedTillOption in advancedController.blockedTillOptions"  ng-change="advancedController.refreshSensor(rule)" required>
+                  </select>
+                </div>
               </div>
             </fieldset>
           </article>

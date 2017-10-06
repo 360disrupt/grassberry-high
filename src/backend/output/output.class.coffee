@@ -23,6 +23,7 @@ class Output
     @.relaisController = options.relaisController || throw new Error("Relais controller is required")
     @.state = 0
     @.blockedBy = null
+    @.blockedTill = null
     # logger.info "Registered Output  #{inspect options}"
     return
 
