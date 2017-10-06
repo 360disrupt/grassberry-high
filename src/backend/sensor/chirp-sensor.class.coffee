@@ -19,7 +19,7 @@ socketIoMessenger = require('../_socket-io/socket-io-messenger.js')
 logger = require('../_logger/logger.js').getLogger()
 
 class ChirpSensor extends Sensor
-  constructor: (options) ->
+  constructor: (options, callback) ->
     debugSensorChrip "Water sensor #{options._id}"
     that = @
     super options, (err)->
