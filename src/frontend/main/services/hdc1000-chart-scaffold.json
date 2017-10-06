@@ -3,6 +3,7 @@
   "allSensors": [],
   "activeDetectors": [],
   "series": [],
+  "detectorTypes":["temperature", "humidity"],
   "options": {
     "scales": {
       "yAxes": [

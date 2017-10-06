@@ -62,14 +62,15 @@
               </div>
 
               <div class="col-xs-12 col-sm-12 col-md-4">
-                <div class="sensor" ng-repeat="sensor in chamber.chart.allSensors">
-                  <div class="detector" ng-repeat="detector in sensor.detectors">
-                    <label>{{detector.name}}</label>
+                <div class="sensor">
+                  <div class="detector" ng-repeat="series in chart.series track by $index">
+                    <label>{{series}}</label>
                     <p>
-                      <i class="fa fa-thermometer-half" ng-if="detector.type=='temperature'"></i>
-                      <i class="fa fa-percent" ng-if="detector.type=='humidity'"></i>
-                      <i class="fa fa-tint" ng-if="detector.type=='water'"></i>
-                      {{detector.currentValue | number : 2 | sensorFilter: detector.type}} {{detector.unit}}
+                      <i class="fa fa-thermometer-half" ng-if="chart.detectorTypes[$index]=='temperature'"></i>
+                      <i class="fa fa-percent" ng-if="chart.detectorTypes[$index]=='humidity'"></i>
+                      <i class="fa fa-tint" ng-if="chart.detectorTypes[$index]=='water'"></i>
+                      <span ng-if="chart.detectorTypes[$index]=='co2'">ppm</span>
+                      {{chart.data[$index][chart.data[$index].length-1].y | number : 2 | sensorFilter: chart.detectorTypes[$index]}}
                     </p>
                   </div>
                 </div>

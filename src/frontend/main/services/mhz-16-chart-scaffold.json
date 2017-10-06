@@ -3,6 +3,7 @@
   "allSensors": [],
   "activeDetectors": [],
   "series": [],
+  "detectorTypes":["co2"],
   "options": {
     "scales": {
       "yAxes": [
