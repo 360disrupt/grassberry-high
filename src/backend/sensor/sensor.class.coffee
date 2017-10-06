@@ -42,7 +42,7 @@ class Sensor
     @.sensorPushIntervall = 5000 #push sensor each 5s
     @.sensorWriteIntervall = 5000 #write sensor each 5s
     @.timeUnit = 'seconds'
-    @.modes = {adjustValues: 5}
+    @.modes = options.modes || {adjustValues: 5}
 
     async.eachSeries @.detectors,
       (detector, next)->
