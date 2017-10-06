@@ -1,4 +1,4 @@
-angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-ng', 'ngResource']).service("chartService", ($http, $rootScope, $state, $cookies, $q, $log, $window, lodash, chatSocket, sensorService, MHZ16ChartScaffold, HDC1000ChartScaffold, matchmedia) ->
+angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-ng', 'ngResource']).service("chartService", ($http, $rootScope, $state, $cookies, $q, $log, $window, lodash, chatSocket, sensorService, MHZ16ChartScaffold, ChirpChartScaffold, HDC1000ChartScaffold, matchmedia) ->
   self = @
   HISTORY_LENGTH = 30
   @.chambers = []
@@ -88,7 +88,9 @@ angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-n
       scaffolds.mhz16 = mhz16Scaffold
       HDC1000ChartScaffold.get (hdc1000Scaffold)->
         scaffolds.hdc1000 = hdc1000Scaffold
-        return callback scaffolds
+        ChirpChartScaffold.get (chirpScaffold)->
+          scaffolds.chirp = chirpScaffold
+          return callback scaffolds
 
   @.buildCharts = (chamber, callback)->
     @.getChartScaffolds (scaffolds)->
@@ -99,6 +101,8 @@ angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-n
             chamber.charts.push scaffolds.mhz16
           when 'hdc1000'
             chamber.charts.push scaffolds.hdc1000
+          when 'chirp'
+            chamber.charts.push scaffolds.chirp
           else
             return callback "No chartscaffold #{activeSensor.model}"
 
@@ -166,4 +170,6 @@ angular.module("myChartService", ['websockets', 'mySensorService', 'matchmedia-n
   return $resource('./frontend/main/services/mhz-16-chart-scaffold.json')
 .factory 'HDC1000ChartScaffold', ($resource) ->
   return $resource('./frontend/main/services/hdc1000-chart-scaffold.json')
+.factory 'ChirpChartScaffold', ($resource) ->
+  return $resource('./frontend/main/services/chirp-chart-scaffold.json')
 

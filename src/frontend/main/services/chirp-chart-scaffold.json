@@ -1,0 +1,47 @@
+{
+  "stream": true,
+  "allSensors": [],
+  "activeDetectors": [],
+  "series": [],
+  "detectorTypes":["water"],
+  "options": {
+    "scales": {
+      "yAxes": [
+        {
+          "scaleLabel": {"labelString":"Moisture/Water", "display": true, "fontColor":"a2b6c4"},
+          "id": "y-axis-1",
+          "type": "linear",
+          "display": true,
+          "position": "left",
+          "ticks": {
+             "stepSize": 25
+          }
+        }
+      ],
+      "xAxes": [
+        {
+          "scaleLabel": {"labelString":"Time", "display": true},
+          "id": "x-axis-1",
+          "type": "time",
+          "display": true,
+          "position": "bottom",
+          "ticks": {
+            "autoSkip":true,
+            "maxTicksLimit":20
+          },
+          "time": {
+            "unit":"seconds",
+            "displayFormats": {
+              "seconds": "HH:mm:ss",
+              "minutes": "HH:mm a",
+              "hours": "HH"
+            }
+          }
+
+        }
+      ]
+    },
+    "datasetOverride": [{ "yAxisID": "y-axis-1", "pointBackgroundColor":"rgba(162,182,196,0.5)", "borderColor": "#a2b6c4", "backgroundColor": "rgba(162,182,196,0.2)" }]
+  },
+  "data": []
+}
