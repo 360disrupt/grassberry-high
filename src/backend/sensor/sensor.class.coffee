@@ -253,17 +253,17 @@ class Sensor
           outputService.operateOutput rule.output, operation, info, detector._id, (err)->
             logger.error err if err?
 
-          #if a duration exists, counter rule is applied
-          if rule.durationMSOn?
-            outputService.blockOutput rule.output, rule.durationMBlocked, (err)->
-              if err? #in case of error revert to prevent water damage
-                outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
-                  logger.error err if err?
-              else
-                setTimeout ()->
+            #if a duration exists, counter rule is applied
+            if rule.durationMSOn?
+              outputService.blockOutput rule.output, rule.durationMBlocked, (err)->
+                if err? #in case of error revert to prevent water damage
                   outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
                     logger.error err if err?
-                , rule.durationMSOn
+                else
+                  setTimeout ()->
+                    outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
+                      logger.error err if err?
+                  , rule.durationMSOn
     return
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////
