@@ -107,7 +107,7 @@ downloadSoftware = (update, callback)->
     .on 'error', (err)->
       return callback err
 
-exports.updateSoftware = (callback)->
+exports.updateSoftware = (options, callback)->
   async.waterfall [
     (next)->
       shellService.getSerial next

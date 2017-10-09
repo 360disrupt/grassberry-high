@@ -31,7 +31,8 @@ module.exports = (app, passport, user, environment) ->
   )
 
   app.get('/updateSoftware', routesService.clean, (req, res) ->
-    systemUpdate.updateSoftware((err, results) ->
+    options = {}
+    systemUpdate.updateSoftware(options, (err, results) ->
       if (err)
         return res.json({ err: err })
       return res.json(results: results)
