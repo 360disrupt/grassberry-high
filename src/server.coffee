@@ -167,10 +167,13 @@ db.once 'open', () ->
       )
     else
       systemUpdate = require('./backend/system/system.update.js')
+      conversionHelper = require('./backend/_helper/conversion.helper.js')
       srvHTTP = http.createServer(app).listen(portHTTP, () ->
         logger.info("Express server listening on port #{portHTTP} environment: #{environment}")
         io = io.listen(srvHTTP)
         async.series [
+          (next)->
+            conversionHelper.setTimeZone next
           (next)->
             debugBoot "-->IO<--"
             logger.setIo io, next
