@@ -46,9 +46,10 @@ watch = (callback)->
         debugI2c "LOST #{differenceLost}" if differenceLost.length > 0
         debugI2c "ADDED #{differenceAdded}" if differenceAdded.length > 0
         activeDevicesTemp = self.activeDevices
-        bootOptions = { noCrons: true, additive: true }
-        bootOptions.noOutputs = true if differenceLost.indexOf(RELAIS_CONTROLLER) == -1 && differenceAdded.indexOf(RELAIS_CONTROLLER) == -1
-        outputAndSensorBootHelper.bootSensorsAndOutputs bootOptions, ->
+        if differenceAdded.length > 0
+          bootOptions = { noCrons: true, additive: true, filterRead: {$in: differenceAdded} }
+          bootOptions.noOutputs = true if differenceLost.indexOf(RELAIS_CONTROLLER) == -1 && differenceAdded.indexOf(RELAIS_CONTROLLER) == -1
+          outputAndSensorBootHelper.bootSensorsAndOutputs bootOptions, ->
   , SCAN_INTERVALL
   return callback()
 

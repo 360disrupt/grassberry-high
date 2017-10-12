@@ -1,6 +1,7 @@
 inspect = require('util').inspect
 chalk = require('chalk')
 debugSensorBoot = require('debug')('sensor:boot')
+debugSensorBootVerbose = require('debug')('sensor:boot:verbose')
 
 async = require('async')
 mongoose = require('mongoose')
@@ -30,13 +31,15 @@ addSensor = (newSensor, callback)->
   return callback()
 
 exports.bootSensors = (options, callback)->
-  SensorModel.find({}).lean().exec (err, sensorsFound) ->
+  filterRead = options.filterRead || {}
+  SensorModel.find(filterRead).lean().exec (err, sensorsFound) ->
     return callback err if err?
     self.sensors = [] if options.additive != true
     async.eachSeries sensorsFound,
       (sensor, next)->
         return next() if !!~_.findIndex(self.sensors, { 'address': sensor.address }) #if already in stack
         debugSensorBoot "Sensor #{sensor.address} #{sensor.model} is active: #{i2c.adressInActiveDevices sensor.address}"
+        debugSensorBootVerbose _.findIndex(self.sensors, { 'address': sensor.address }), self.sensors
         newSensor = null
         if sensor.technology == 'i2c' && i2c.adressInActiveDevices sensor.address
           switch sensor.model
