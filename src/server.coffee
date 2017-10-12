@@ -201,7 +201,7 @@ db.once 'open', () ->
           systemUpdate.bootSoftwareUpdateCronjob() if process.env.OS != 'MAC OSX'
           debugBoot "-->Boot Completed<--"
           debugBoot "Booting took #{moment().diff(startProcessTime, 'seconds')} seconds"
-          debugBoot "\n================================= BOOTED #{moment().format('DD-MM-YYYY hh:mm')} ========================\n"
+          debugBoot "\n================================= BOOTED #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'} ========================\n"
       )
 
 #Error Handling

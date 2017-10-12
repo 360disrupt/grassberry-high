@@ -10,6 +10,7 @@ _ = require("lodash")
 CronJob = require('cron').CronJob
 CronjobModel = require('./cronjob.model.js').getModel()
 
+conversionHelper = require('../_helper/conversion.helper.js')
 logger = require('../_logger/logger.js').getLogger()
 outputService = require('../output/output.service.js')
 cronjobs = []
@@ -52,7 +53,7 @@ exports.bootStatus = (cronjobs)->
 
     if action?
       debugCronjobs "Bootcronjob triggers #{outputId} command #{action}"
-      info = "Due to boot #{moment().format('DD.MM HH:mm:ss')}"
+      info = "Due to boot #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'}"
       outputService.operateOutput outputId, action, info, null, (err)->
         logger.error err if err?
 
@@ -67,7 +68,7 @@ exports.launchCronjobs = (callback)->
       debugCronjobs "Launching for output #{cronjob.output}, #{cronjob.cronPattern} #{cronjob.action}"
       newCronjob = new CronJob( cronjob.cronPattern
         () ->
-          info = "Due to cronjob #{moment().format('DD:MM HH:mm:ss')}"
+          info = "Due to cronjob #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'}"
           outputService.operateOutput cronjob.output._id, cronjob.action, info, null, (err)->
             logger.error err if err?
         () ->

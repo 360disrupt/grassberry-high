@@ -7,6 +7,7 @@ moment = require('moment')
 
 routesService = require("./routes.service.js")
 outputService = require('../output/output.service.js')
+conversionHelper = require('../_helper/conversion.helper.js')
 
 module.exports = (app, passport, user, environment) ->
   # output routes ===============================================================
@@ -39,7 +40,7 @@ module.exports = (app, passport, user, environment) ->
   app.put('/operateOutput', routesService.clean, (req, res) ->
     return res.status(BAD_REQUEST).json({ err: "Id is required" }) if !req.body.id?
     return res.status(BAD_REQUEST).json({ err: "Operation is required" }) if !req.body.operation?
-    info = "Due user command #{moment().format('DD.MM HH:mm:ss')}"
+    info = "Due user command #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'}"
     outputService.operateOutput(req.body.id, req.body.operation, info, null, (err, success) ->
       if (err)
         return res.json({ err: err })
