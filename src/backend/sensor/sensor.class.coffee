@@ -8,6 +8,7 @@ inspect = require('util').inspect
 chalk = require('chalk')
 debugSensor = require('debug')('sensor')
 debugSensorSwitch = require('debug')('sensor:switch')
+debugSensorSwitchVerbose = require('debug')('sensor:switch:verbose')
 
 async = require('async')
 _ = require('lodash')
@@ -207,7 +208,7 @@ class Sensor
   applyRules: (detector)->
     self = @
     for rule in detector.rules
-      debugSensorSwitch "Currrent Value: #{detector.currentValue.y}", "rule", inspect rule
+      debugSensorSwitchVerbose "Currrent Value: #{detector.currentValue.y}", "rule", inspect rule
       info = "Because #{detector.currentValue.y.toFixed(2)} #{rule.forDetector} was "
       if rule.device == 'pump' && rule.onValue > detector.currentValue.y #pumps are triggered when water level is below 2 (moist)
         statusOn = true
@@ -243,7 +244,7 @@ class Sensor
         if !output?
           console.error "Could not find output #{rule.output}"
           return
-        debugSensorSwitch output.name, "on #{rule.onValue} off #{rule.offValue} State change: #{output.state != state}"
+        debugSensorSwitchVerbose output.name, "on #{rule.onValue} off #{rule.offValue} State change: #{output.state != state}"
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
           return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
@@ -257,10 +258,13 @@ class Sensor
             if rule.durationMSOn?
               outputService.blockOutput rule.output, rule.durationMBlocked, (err)->
                 if err? #in case of error revert to prevent water damage
+                  logger.error err if err?
                   outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
                     logger.error err if err?
                 else
+                  debugSensorSwitch "Counter operation set"
                   setTimeout ()->
+                    debugSensorSwitch "Counter operation triggered"
                     outputService.operateOutput rule.output, counterOperation, 'counter operation' ,detector._id, (err)->
                       logger.error err if err?
                   , rule.durationMSOn
