@@ -1,6 +1,7 @@
 inspect = require('util').inspect
 chalk = require('chalk')
 debugCronjobs = require('debug')('cronjobs')
+debugBoot = require('debug')('boot')
 
 mongoose = require('mongoose')
 moment = require('moment')
@@ -19,9 +20,9 @@ getTimeFromCronjob = (cronTime)->
   return moment(cronTime, "hh:mm:ss", 'en')
 
 afterCurrentTime = (isotime)->
-  isotime = moment("2017-02-01T19:30:00.000")
-  timeProjected = moment(isotime.format('HH:mm'), "HH:mm")
-  return moment().diff(timeProjected, 'minutes') < 0
+  timeProjected = moment(isotime.format('HH:mm:ss'), "HH:mm:ss")
+  debugBoot "Projected time: #{timeProjected.toISOString()} diff: #{moment().diff(timeProjected, 'seconds')} curr:#{moment().format('HH:mm:ss')}"
+  return moment().diff(timeProjected, 'seconds') > 0 #current time exceeded cronjob time
 
 exports.bootStatus = (cronjobs)->
   #always two cronjobs per light in a chamber on & off
@@ -35,10 +36,12 @@ exports.bootStatus = (cronjobs)->
     if grouped[outputId].switchOff? && grouped[outputId].switchOn?
 
       # on is before off trigger, on time is reached, off not: |OFF|ON*|OFF* or |ON*|OFF*|
-      if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'hours') > 0 && afterCurrentTime grouped[outputId].switchOn && !afterCurrentTime grouped[outputId].switchOff
+      if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') > 0 && afterCurrentTime grouped[outputId].switchOn && !afterCurrentTime grouped[outputId].switchOff
+        debugBoot "Switching on => off: #{grouped[outputId].switchOff.format('HH:mm')} on: #{grouped[outputId].switchOn.format('HH:mm')} off after on #{grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') > 0 } on is after current #{afterCurrentTime grouped[outputId].switchOn} off is after current #{!afterCurrentTime grouped[outputId].switchOff}"
         action = 'switchOn'
       # off is before on trigger, on time is reached, off not: |ON|OFF*|ON* or OFF*|ON*
-      else if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'hours') < 0 && afterCurrentTime grouped[outputId].switchOn
+      else if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') < 0 && afterCurrentTime grouped[outputId].switchOn
+        debugBoot "Switching on => off: #{grouped[outputId].switchOff.format('HH:mm')} on: #{grouped[outputId].switchOn.format('HH:mm')} off before on #{grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') < 0 } on is after current: #{afterCurrentTime grouped[outputId].switchOn}"
         action = 'switchOn'
       else
         action = 'switchOff'
@@ -73,7 +76,6 @@ exports.launchCronjobs = (callback)->
         'Europe/Amsterdam'#http://momentjs.com/timezone/ #TODO TIMEZONE & LANGUAGE SETTING
       )
       cronjobs.push newCronjob
-      self.stopCronjobs ->
     return callback null, true
 
 exports.stopCronjobs = ()->
