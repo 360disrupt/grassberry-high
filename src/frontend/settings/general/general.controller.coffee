@@ -124,4 +124,4 @@ angular.module "general", ['myConfigService', 'ngResource', 'modal']
 #///////////////////////////////////////////////////////////////////
     return
   .factory 'Timezones', ($resource) ->
-    return $resource('./frontend/settings/general/timeZones.json')
+    return $resource('./frontend/settings/general/time-zones.json')
