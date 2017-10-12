@@ -1,5 +1,6 @@
 inspect = require('util').inspect
 chalk = require('chalk')
+debugHelperConversion = require('debug')('helper:conversion')
 
 _ = require('lodash')
 moment = require('moment-timezone')
@@ -14,13 +15,16 @@ exports.setTimeZone = (callback)->
   systemRead.getSystem options ,(err, system)->
     return callback err if err?
     timeZone = system.timeZone if system.timeZone?
+    debugHelperConversion "timeZone: ", timeZone
     return callback()
 
 
 exports.formatTimeToLocalTime = (dateTime, format)->
   if timeZone?
-    return moment.tz(dateTime, timeZone).format(format)
-  return moment(dateTime).format(format)
+    return moment.tz(dateTime, timeZone).format(format).toString()
+  return moment(dateTime).format(format).toString()
 
 exports.getLocalTime = (format)->
-  self.formatTimeToLocalTime moment(), format
+  localTime = self.formatTimeToLocalTime moment(), format
+  debugHelperConversion "localTime", localTime
+  return localTime
