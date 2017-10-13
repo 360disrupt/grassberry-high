@@ -59,22 +59,25 @@ exports.bootStatus = (cronjobs)->
 
   return
 
+getCronFunction = (cronjob)->
+  debugCronjobs "Creating cron function #{cronjob.output}, #{cronjob.cronPattern} #{cronjob.action}"
+  return ()->
+    info = "Due to cronjob #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'}"
+    debugCronjobs "triggered cronjob #{cronjob.output}, #{cronjob.cronPattern} #{cronjob.action}"
+    outputService.operateOutput cronjob.output._id, cronjob.action, info, null, (err)->
+      logger.error err if err?
+
 exports.launchCronjobs = (callback)->
   CronjobModel.find({}).populate('output', {}).exec (err, cronjobsFound) ->
     return callback err if err?
     self.bootStatus cronjobsFound
     for cronjob in cronjobsFound
-      debugCronjobs inspect cronjobsFound
       debugCronjobs "Launching for output #{cronjob.output}, #{cronjob.cronPattern} #{cronjob.action}"
-      newCronjob = new CronJob( cronjob.cronPattern
+      newCronjob = new CronJob(cronjob.cronPattern
+        getCronFunction(cronjob)
         () ->
-          info = "Due to cronjob #{conversionHelper.getLocalTime 'DD.MM HH:mm:ss'}"
-          outputService.operateOutput cronjob.output._id, cronjob.action, info, null, (err)->
-            logger.error err if err?
-        () ->
-          debugCronjobs "stopped Cronjobs #{@.cronTime.source}"
+          debugCronjobs "stopped Cronjob #{@.cronTime.source}"
         true
-        'Europe/Amsterdam'#http://momentjs.com/timezone/ #TODO TIMEZONE & LANGUAGE SETTING
       )
       cronjobs.push newCronjob
     return callback null, true
