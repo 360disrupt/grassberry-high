@@ -249,6 +249,7 @@ class Sensor
           return null if output.blockedBy? && output.blockedBy != detector._id
           return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
           return null if rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)
+          return null if rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10
           debugSensorSwitch "SWITCHED #{operation}"
           #if different operate the output
           outputService.operateOutput rule.output, operation, info, detector._id, (err)->

@@ -211,6 +211,10 @@
                   <select class="form-control tutorial-step" name="water-sensor-blocked-till" ng-model="rule.durationMBlocked" ng-options="blockedTillOption.value as blockedTillOption.label for blockedTillOption in advancedController.blockedTillOptions"  ng-change="advancedController.refreshSensor(rule)" required>
                   </select>
                 </div>
+                <div class="form-group col-lg-2">
+                  <label>Night Off <i class="fa fa-info-circle" aria-hidden="true" uib-tooltip="Keep pumps off between 22:00-10:00."></i></label>
+                  <input type="checkbox" class="form-control tutorial-step" name="water-night-mode" ng-model="rule.nightOff" enter-to-tab/>
+                </div>
               </div>
             </fieldset>
           </article>

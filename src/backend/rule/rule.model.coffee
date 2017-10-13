@@ -12,6 +12,7 @@ ruleSchema = mongoose.Schema({
   onValue: Number, #treshold on
   durationMSOn: Number #switch on for a duration if treshold is met
   durationMBlocked: Number #block for x ms after treshold was met
+  nightOff: Boolean
   sensor: {
     type: ObjectId,
     ref: 'Sensor',
