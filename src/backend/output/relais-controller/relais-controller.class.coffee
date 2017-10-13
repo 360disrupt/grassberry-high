@@ -30,7 +30,7 @@ class RelaisController
       @.addressMapping = process.env.RELAIS_MAPPING.split(',').map (entry)->
         return parseInt(entry)
     else
-      @.addressMapping = process.env.RELAIS_MAPPING || [8, 6, 4, 2, 7, 5, 3, 1] #relais are position diff. to outlets
+      @.addressMapping = [8, 6, 4, 2, 7, 5, 3, 1] #relais are position diff. to outlets
     @.bootRelaisController (err)->
       logger.error if err?
 
