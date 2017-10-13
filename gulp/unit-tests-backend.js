@@ -26,10 +26,10 @@ var paths = gulp.paths;
 gulp.task('testBElimited', ['watch-backend-limited'], function () {
   var limitedPath = paths.specs + '/backend/';
   var path = argv.p || '*';
-  var specifier = argv.s || '*';
 
-  limitedPath += path + "." + specifier
-  limitedPath += '.spec.js';
+
+  limitedPath += path;
+  limitedPath += '*.spec.js';
 
   console.log(limitedPath);
   return gulp.src([limitedPath])
