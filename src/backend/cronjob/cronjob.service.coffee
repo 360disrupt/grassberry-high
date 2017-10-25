@@ -21,6 +21,9 @@ getTimeFromCronjob = (cronTime)->
   return moment(cronTime, "hh:mm:ss", 'en')
 
 afterCurrentTime = (isotime)->
+  if !isotime? || typeof isotime.format != 'function'
+    logger.error("wasn't able to project time: #{isotime}")
+    return false
   timeProjected = moment(isotime.format('HH:mm:ss'), "HH:mm:ss")
   debugBoot "Projected time: #{timeProjected.toISOString()} diff: #{moment().diff(timeProjected, 'seconds')} curr:#{moment().format('HH:mm:ss')}"
   return moment().diff(timeProjected, 'seconds') > 0 #current time exceeded cronjob time
@@ -37,11 +40,11 @@ exports.bootStatus = (cronjobs)->
     if grouped[outputId].switchOff? && grouped[outputId].switchOn?
 
       # on is before off trigger, on time is reached, off not: |OFF|ON*|OFF* or |ON*|OFF*|
-      if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') > 0 && afterCurrentTime grouped[outputId].switchOn && !afterCurrentTime grouped[outputId].switchOff
+      if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') > 0 && afterCurrentTime(grouped[outputId].switchOn) && !afterCurrentTime(grouped[outputId].switchOff)
         debugBoot "Switching on => off: #{grouped[outputId].switchOff.format('HH:mm')} on: #{grouped[outputId].switchOn.format('HH:mm')} off after on #{grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') > 0 } on is after current #{afterCurrentTime grouped[outputId].switchOn} off is after current #{!afterCurrentTime grouped[outputId].switchOff}"
         action = 'switchOn'
       # off is before on trigger, on time is reached, off not: |ON|OFF*|ON* or OFF*|ON*
-      else if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') < 0 && afterCurrentTime grouped[outputId].switchOn
+      else if grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') < 0 && afterCurrentTime(grouped[outputId].switchOn)
         debugBoot "Switching on => off: #{grouped[outputId].switchOff.format('HH:mm')} on: #{grouped[outputId].switchOn.format('HH:mm')} off before on #{grouped[outputId].switchOff.diff(grouped[outputId].switchOn, 'seconds') < 0 } on is after current: #{afterCurrentTime grouped[outputId].switchOn}"
         action = 'switchOn'
       else
