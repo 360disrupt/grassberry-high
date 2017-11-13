@@ -14,6 +14,7 @@ exports.setTimeZone = (callback)->
   options = {}
   systemRead.getSystem options ,(err, system)->
     return callback err if err?
+    return callback() if !system?
     timeZone = system.timeZone if system.timeZone?
     debugHelperConversion "timeZone: ", timeZone
     return callback()
