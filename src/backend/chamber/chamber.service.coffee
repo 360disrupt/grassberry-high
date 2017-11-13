@@ -160,7 +160,7 @@ exports.upsertChamber = (upsertChamber, callback)->
 
   if upsertChamber.strains?
     upsertChamber.strains = upsertChamber.strains.filter (strain)->
-      return strain.name != null
+      return (strain? && strain.name != null)
 
   async.series [
     (next)-> # save rules
