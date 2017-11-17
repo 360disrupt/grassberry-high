@@ -1,34 +1,10 @@
 <div class="bg-ultralight-grey">
-  <div class="menu container container-last">
-    <div class="row flex-menu">
-
-      <section class="col-xs-12 col-sm-12 col-md-6"  ng-if="adminMenuController.checkPermission(['autoLogin'])">
-        <div class="bg-white" stretch-flexbox>
-          <div class="row">
-            <!-- <h3 class="text-uppercase">Send Msg to Coin Selector</h3>
-            <div class="col-xs-12 form-group">
-              <label>Headercode</label>
-              <select class="form-control" name="msgRecipient" ng-model="adminMenuController.msg.recipient" ng-options="msgRecipient.label as msgRecipient.label for msgRecipient in adminMenuController.msgRecipientOptions"></select>
-              <select class="form-control" name="msgHeader" ng-model="adminMenuController.msg.header" ng-options="msgHeader.value as msgHeader.label for msgHeader in adminMenuController.msgOptions[adminMenuController.msg.recipient]" ng-change="adminMenuController.enableDataBytes()"></select>
-
-
-              <div ng-show="adminMenuController.msg.dataBytes != null">
-                <input type="text" class="form-control" name="dataByte" ng-model="adminMenuController.byte" placeholder="Databyte"/>
-                <button class="btn btn-lime" ng-click="adminMenuController.addDataByteToMsg()">Add Byte</button>
-                <button class="btn btn-red" ng-click="adminMenuController.clearDataBytesFromMsg()">Clear Bytes</button>
-                <ul>
-                  <li ng-repeat="byte in adminMenuController.msg.dataBytes track by $index">Byte {{$index}} = {{byte}}</li>
-                </ul>
-              </div>
-              <em ng-hide="adminMenuController.msg.dataBytes != null">MSG has no data bytes</em>
-            </div>
-          </div>
-          <div class="row">
-            <button class="btn btn-red" ng-click="adminMenuController.sendMsgToCoinSelector()">Send Msg</button>
-          </div> -->
-        </div>
-      </section>
-
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>DB Stats</h1>
+        <div>Sensor Data: {{adminMenuController.dataSizeSensorData}} MB</div>
+      </div>
     </div>
-  </div>
+  </section>
 </div>

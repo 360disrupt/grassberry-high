@@ -28,10 +28,6 @@ angular.module "adminTools", ['adminMenu']
           templateUrl: "admin-tools/admin-menu/admin-menu.html"
           controller: "AdminMenuCtrl"
           controllerAs: "adminMenuController"
-        'footer@':
-          templateUrl: "footer/footer.html"
-          controller: "RootCtrl"
-          controllerAs: "rootController"
     }
   ])
   .config(['$stateProvider', ($stateProvider) ->])
