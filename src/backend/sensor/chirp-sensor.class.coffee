@@ -22,7 +22,7 @@ class ChirpSensor extends Sensor
   constructor: (options, callback) ->
     debugSensorChrip "Water sensor #{options._id}"
     that = @
-    options.modes = {} if !options.modes?
+    options.modes = options.modes || {}
     super options, (err)->
       that.boot (err)->
         return callback err if err?

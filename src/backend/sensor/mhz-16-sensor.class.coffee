@@ -29,6 +29,7 @@ class MHZ16Sensor extends Sensor #co2
   constructor: (options, callback) ->
     debugCO2 "CO2 sensor #{options._id}"
     that = @
+    options.modes = options.modes || { kalman: {R: 0.01, Q: 1} }
     super options, (err)->
       that.boot (err)->
         return callback err if err?

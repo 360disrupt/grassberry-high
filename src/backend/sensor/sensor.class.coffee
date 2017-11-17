@@ -7,6 +7,7 @@ STATISTIC_INTERVALL = HISTORY_LENGTH * 60 * 1000 #max time unit is hours
 inspect = require('util').inspect
 chalk = require('chalk')
 debugSensor = require('debug')('sensor')
+debugSensorFilter = require('debug')('sensor:filter')
 debugSensorSwitch = require('debug')('sensor:switch')
 debugSensorSwitchVerbose = require('debug')('sensor:switch:verbose')
 
@@ -14,6 +15,7 @@ async = require('async')
 _ = require('lodash')
 moment = require('moment')
 mongoose = require('mongoose')
+KalmanFilter = require('kalmanjs').default
 
 ObjectId = require('mongoose').Types.ObjectId
 SensorDataModel = require('../data-logger/sensor-data.model.js').getModel()
@@ -43,7 +45,11 @@ class Sensor
     @.sensorPushIntervall = 5000 #push sensor each 5s
     @.sensorWriteIntervall = 5000 #write sensor each 5s
     @.timeUnit = 'seconds'
+    debugSensorFilter options.modes
     @.modes = options.modes || {adjustValues: 5}
+    if @.modes.kalman?
+      @.kalmanFilter = new KalmanFilter(@.modes.kalman) #R internal variation, Q expected variation through noise
+
 
     async.eachSeries @.detectors,
       (detector, next)->
@@ -144,6 +150,14 @@ class Sensor
     return callback() if isNaN(newValue)
     if @.modes.adjustValues?
       newValue = @.adjustValue detector, newValue
+    else if @.kalmanFilter?
+      historyY = detector.history.map (value)->
+        return value.y
+      historyY.push newValue
+      debugSensorFilter "Before Kalman: #{newValue}"
+      newValue = historyY.map((value)->
+        return self.kalmanFilter.filter(value)).pop()
+      debugSensorFilter "After Kalman: #{newValue}"
 
     detector.currentValue = {x: moment().toDate(), y:newValue} #.startOf('minute')
     @.applyRules(detector)

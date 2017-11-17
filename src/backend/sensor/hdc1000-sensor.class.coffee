@@ -20,6 +20,7 @@ class HDC1000Sensor extends Sensor #temperature/humidity
   constructor: (options, callback) ->
     debugTemp "Temp/Humdity sensor #{options._id}"
     that = @
+    options.modes = options.modes || { kalman: {R: 0.01, Q: 1} }
     super options, (err)->
       systemOptions = {}
       systemRead.getSystem systemOptions, (err, system)->
