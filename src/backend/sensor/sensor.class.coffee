@@ -10,11 +10,13 @@ debugSensor = require('debug')('sensor')
 debugSensorFilter = require('debug')('sensor:filter')
 debugSensorSwitch = require('debug')('sensor:switch')
 debugSensorSwitchVerbose = require('debug')('sensor:switch:verbose')
+debugSensorSwitchBlockers = require('debug')('sensor:switch:blockers')
 
 async = require('async')
 _ = require('lodash')
 moment = require('moment')
 mongoose = require('mongoose')
+fs = require('fs')
 KalmanFilter = require('kalmanjs').default
 
 ObjectId = require('mongoose').Types.ObjectId
@@ -155,9 +157,11 @@ class Sensor
         return value.y
       historyY.push newValue
       debugSensorFilter "Before Kalman: #{newValue}"
+      fs.appendFile(process.env.APP_PATH + "/logs/kalman_#{detector.name}.csv", "#{newValue};", 'utf-8', ->) if process.env.LOG_KALMAN == 'true'
       newValue = historyY.map((value)->
         return self.kalmanFilter.filter(value)).pop()
       debugSensorFilter "After Kalman: #{newValue}"
+      fs.appendFile(process.env.APP_PATH + "/logs/kalman_#{detector.name}.csv", "#{newValue}\n", 'utf-8', ->) if process.env.LOG_KALMAN == 'true'
 
     detector.currentValue = {x: moment().toDate(), y:newValue} #.startOf('minute')
     @.applyRules(detector)
@@ -259,6 +263,7 @@ class Sensor
           console.error "Could not find output #{rule.output}"
           return
         debugSensorSwitchVerbose output.name, "on #{rule.onValue} off #{rule.offValue} State change: #{output.state != state}"
+        debugSensorSwitchBlockers output.name, "by", (output.blockedBy? && output.blockedBy != detector._id), "till", (output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')), "pumpHasProp", (rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)), "nightM", (rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10), moment().hour()
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
           return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
