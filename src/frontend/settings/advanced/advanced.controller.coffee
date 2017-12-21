@@ -1,6 +1,8 @@
 angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorService', 'myOutputService', 'myRuleService', 'mySystemService', 'tsd.tutorial', 'tsd.unitFilter', 'cfp.hotkeys', 'ngLodash' , 'download', 'ngFileUpload']
-  .controller "AdvancedCtrl", ($rootScope, $scope, $timeout, $resource, $filter, settingService, chamberService, outputService, sensorService, ruleService, hotkeys, authUserService, systemService, lodash, download, Upload) ->
+  .controller "AdvancedCtrl", ($rootScope, $scope, $timeout, $resource, $filter, $cookies, settingService, chamberService, outputService, sensorService, ruleService, hotkeys, authUserService, systemService, lodash, download, Upload) ->
     self = @
+    $scope.developer = $cookies.get('developer') == 'true'
+
     @.chambers = []
     @.detectorOptions = []
     @.outputOptions = []

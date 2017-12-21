@@ -259,6 +259,20 @@
       </div>
     </section>
 
+    <section class="container bg-white round-card" ng-show="developer">
+      <div class="row">
+        <div class="col-xs-12">
+          {{advancedController.activeDevices}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          {{advancedController.chambers}}
+        </div>
+      </div>
+    </section>
+
     <tutorial tutorial-texts="advancedController.tutorialTexts" compileScope="this"></tutorial>
   </div>
 </div>

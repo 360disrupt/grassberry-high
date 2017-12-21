@@ -1,5 +1,5 @@
-angular.module "header", ['websockets', 'myAuthUserService', 'ui.bootstrap', 'tsd.reaper', 'mySystemService']
-  .controller "HeaderCtrl", ($scope, $rootScope, $state, $log, $window, $q, $timeout, $location, chatSocket, systemService, authUserService) ->
+angular.module "header", ['websockets', 'myAuthUserService', 'ui.bootstrap', 'tsd.reaper', 'mySystemService', 'cfp.hotkeys']
+  .controller "HeaderCtrl", ($scope, $rootScope, $state, $log, $window, $q, $timeout, $location, $cookies, hotkeys, chatSocket, systemService, authUserService) ->
     self = @
     @.user = {}
 
@@ -51,7 +51,15 @@ angular.module "header", ['websockets', 'myAuthUserService', 'ui.bootstrap', 'ts
         })
 
 
+    hotkeys.add({
+      combo: 'alt+ctrl+d',
+      description: 'Show developer mode',
+      callback: () ->
+        developer = $cookies.get('developer') == 'true'
+        $cookies.put('developer', !developer)
+        return
 
+    })
 
     systemService.getSystem().then (system)->
       self.system = system
