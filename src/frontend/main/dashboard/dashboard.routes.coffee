@@ -1,4 +1,4 @@
-angular.module "dashboard", ['chart.js', 'tsd.checkbox', 'myChamberService', 'myChartService', 'myOutputService', 'mySensorService','mySimulationService', 'myDataService', 'dndLists', 'tsd.output', 'tsd.sensor']
+angular.module "dashboard", ['chart.js', 'tsd.checkbox', 'myChamberService', 'myChartService', 'myOutputService', 'mySensorService','mySimulationService', 'myDataService', 'mySettingService', 'dndLists', 'tsd.output', 'tsd.sensor']
   .constant('statesDashboard', [
     {
     name: "root.dashboard",

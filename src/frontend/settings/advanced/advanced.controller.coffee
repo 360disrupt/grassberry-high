@@ -221,6 +221,13 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
           # self.reAssignSensors()
         return
 
+    #================================= LISTENER ============================
+    $scope.$watch ()->
+      return $cookies.get('developer') == 'true'
+    , (newValue)->
+      $scope.developer = newValue
+      return
+
     #================================= INIT ==================================
     @.getChambers()
     @.getSensors(->)

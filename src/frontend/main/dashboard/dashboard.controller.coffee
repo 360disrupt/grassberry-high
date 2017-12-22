@@ -1,7 +1,9 @@
 angular.module "dashboard"
-  .controller "DashboardCtrl", ($rootScope, $scope, $http, $timeout, Flash, chartService, simulationService, chamberService, outputService, sensorService, dataService, authUserService) ->
+  .controller "DashboardCtrl", ($rootScope, $scope, $http, $timeout, $cookies, Flash, chartService, simulationService, chamberService, outputService, sensorService, dataService, settingService, authUserService) ->
     self = @
+    $scope.developer = $cookies.get('developer') == 'true'
     @.infoHidden = false
+    @.activeDevices = []
     @.chambers = []
     @.sensors = []
     @.fakeWarnings = simulationService.getFakeWarnings()
@@ -100,7 +102,17 @@ angular.module "dashboard"
       # self.updateEvents message.payload
       return
 
+#================================= LISTENER ============================
+    $scope.$watch ()->
+      return $cookies.get('developer') == 'true'
+    , (newValue)->
+      $scope.developer = newValue
+      return
+
 #================================= INIT ==================================
     @.getChambers()
+    settingService.getActiveDevices().then (activeDevices)->
+      self.activeDevices = activeDevices
+      return
 #///////////////////////////////////////////////////////////////////
     return

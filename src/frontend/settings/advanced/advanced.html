@@ -262,13 +262,15 @@
     <section class="container bg-white round-card" ng-show="developer">
       <div class="row">
         <div class="col-xs-12">
-          {{advancedController.activeDevices}}
+          <h2>Active Devices</h2>
+          <pre ng-show="developer" id="default-spacing">{{ advancedController.activeDevices | json }}</pre>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12">
-          {{advancedController.chambers}}
+          <h2>Chambers</h2>
+          <pre ng-show="developer" id="default-spacing">{{ advancedController.chambers | json }}</pre>
         </div>
       </div>
     </section>
