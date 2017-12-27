@@ -266,7 +266,7 @@ class Sensor
         debugSensorSwitchBlockers output.name, "by", (output.blockedBy? && output.blockedBy != detector._id), "till", (output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')), "pumpHasProp", (rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)), "nightM", (rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10), moment().hour()
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
-          return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')
+          return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds') > 0
           return null if rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)
           return null if rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10
           debugSensorSwitch "SWITCHED #{operation}"
