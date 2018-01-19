@@ -16,8 +16,9 @@ angular.module "dashboard"
       moment(timestamp).format('DD.MM HH:mm:ss')
 
 #=============================== GROW ================================
-    @.getStrain = (chamber)->
-      return chamber.strain.link if chamber.strain?.link?
+    @.getStrainInfo = (strain)->
+      return strain.link || "https://www.leafly.com/search?q=#{strain.name}&typefilter=strain"
+
 
     @.buildLightBar = (light)->
       mmtMidnight = moment().startOf('day')

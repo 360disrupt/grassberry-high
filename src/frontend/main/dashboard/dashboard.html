@@ -31,8 +31,10 @@
 
           <div class="row" ng-hide="chamber.strains.length == 0">
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
-              <label>Strain</label>
-              <p><a ng-href="strain.link" ng-repeat="strain in chamber.strains">{{strain.name}}</a></p>
+              <label><ng-pluralize count="chamber.strains"  when="{'1': 'Strain', 'other':'Strains'}"></ng-pluralize></label>
+              <ul>
+                <li ng-repeat="strain in chamber.strains"><a ng-href="dashboardController.getStrainInfo(strain)">{{strain.name}}</a></li>
+              </ul>
             </div>
           </div>
         </div>
