@@ -39,6 +39,17 @@ class ChirpSensor extends Sensor
     return "No valid waterlevel" if !waterLevel? || !WATERLEVELS[waterLevel-1]?
     return WATERLEVELS[waterLevel-1]
 
+  setWetTimeSpan: (waterLevel)-> #measures the time the soild stays moist/wet
+    self = @
+    if(self.lastWaterLevel != waterLevel)
+      if waterLevel > STATUS_DRY
+        self.startWet = moment()
+      else if waterLevel == STATUS_DRY && self.startWet?
+        self.wetTimeSpan = moment().diff(self.startWet, 'seconds')
+      self.lastWaterLevel = waterLevel
+      return
+
+
   readSensor: ()->
     self = @
     if @.i2c1?
@@ -46,6 +57,7 @@ class ChirpSensor extends Sensor
         console.log chalk.bgRed err if err?
         if !err? && waterLevel?
           debugSensorChrip "WATERLEVEL: #{waterLevel} #{self.translateToHuman waterLevel} #{moment().format('hh:mm DD-MM-YYYY')}"
+          self.setWetTimeSpan(waterLevel)
           self.processSensorValue(self.detectors[0], waterLevel, ->)
         setTimeout ()->
           self.readSensor()
