@@ -190,11 +190,20 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
       , 1000
       return
 
-    @.upsertOutput = (output)->
+    @.upsertOutput = ()->
       outputService.upsertOutput(output).then ()->
         self.getOutputs ()->
           self.reAssignOutputs()
         return
+
+    @.operateOuptut = (output)->
+      if output.state == 0
+        operation = 'switchOn'
+        output.state = 1
+      else
+        operation = 'switchOff'
+        output.state = 0
+      outputService.operateOutput output._id, operation
 
     #------------------------------- Sensors------------------------------
     @.filterDetectors = (types)->

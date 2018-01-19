@@ -252,7 +252,13 @@
           <ul>
             <li ng-repeat="activeDevice in advancedController.activeDevices">
               <span ng-show="activeDevice.type == 'sensor'"><i class="fa fa-snowflake-o" aria-hidden="true"></i> {{activeDevice.model}} ({{activeDevice.address}})</span>
-              <span ng-show="activeDevice.type == 'output'"><i class="fa fa-plug" aria-hidden="true"></i> {{activeDevice.name}} ({{activeDevice.address}})</span>
+              <span ng-show="activeDevice.type == 'output'"><i class="fa fa-plug" aria-hidden="true"></i> {{activeDevice.name}} ({{activeDevice.address}})
+                <ul>
+                  <li ng-repeat="output in advancedController.outputOptions">{{output.name}} {{output.label}}
+                    <span ng-click="advancedController.operateOuptut(output)">{{output.state| outputFilter}}</span>
+                  </li>
+                </ul>
+              </span>
             </li>
           </ul>
         </div>
