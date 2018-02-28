@@ -13,6 +13,22 @@ module.exports = (app, passport, user, environment) ->
       return res.json(activeDevices: activeDevices)
   )
 
+  app.post('/updateI2CAddress', routesService.clean, (req, res) ->
+    requiredFields = {
+      sensorType: "Sensor type is required."
+      oldAddress: "Old address is required."
+      newAddress: "New address is required."
+    }
+    err = []
+    for key of requiredFields
+      err.push requiredFields[key] if !req.body[key]?
+    return res.json({ err: err.join(" ") }) if err.length > 0
+
+    i2c.updateI2CAddress sensorType, oldAddress, newAddress, (err) ->
+      return res.json({ err: err }) if err?
+      return res.json({success: true})
+  )
+
 
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return

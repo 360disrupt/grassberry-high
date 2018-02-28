@@ -1,3 +1,12 @@
+# I2C Setup
+detect on raspberry pi:
+i2cdetect -y 1 (alias: checki2c)
+
+0x20 (32) Relais Controller
+0x21 (33), 0x22 (34) Chirp Water Sensor
+0x40 (64), 0x43 (67) HDC1000
+0x4d (77) MHZ16
+
 # General
 I developed the code with the focus on bootstraping a protoype as fast as I could. This affected the code quality, please feel free to open up issues on code quality or improve the quality. New code will be strictly checked to meet code quality. Or in other words, do as I say, not as I do.
 
