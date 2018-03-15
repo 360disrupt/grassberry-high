@@ -100,16 +100,19 @@ exports.getActiveDevices = (callback)->
 #============================== REPROGRAM WATERSENSOR =========================
 
 exports.updateI2CAddress = (sensorType, oldAddress, newAddress, callback)->
-  @.i2c1 = i2c.open BUS
+  return callback "I2C not active" if !self.i2c1?
   switch sensorType
     when 'waterSensor'
+      watersensorRegister = 0x01
       async.series [
         (next)->
-          watersensorRegister = 0x01
-          @.i2c1.writeByte oldAddress, watersensorRegister, newAddress, next
+          debugI2c "Setting waterSensor from #{oldAddress} (#{oldAddress.toString(16)}) to #{newAddress} (#{newAddress.toString(16)})"
+          self.i2c1.writeByte oldAddress, watersensorRegister, newAddress, next
         (next)->
           commandReset = 0x06
-          @.i2c1.writeByte oldAddress, watersensorRegister, newAddress, next
+          debugI2c "Resetting waterSensor"
+          # self.i2c1.writeByte oldAddress, watersensorRegister, commandReset, next
+          self.i2c1.sendByte oldAddress, commandReset, next
       ], (err)->
         return callback err
 

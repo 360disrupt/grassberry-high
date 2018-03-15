@@ -1,5 +1,6 @@
 inspect = require('eyespect').inspector({maxLength: null})
 chalk = require('chalk')
+debugRoutesI2c = require('debug')('routes:i2c')
 
 routesService = require("./routes.service.js")
 i2c = require('../i2c/i2c.js')
@@ -24,7 +25,8 @@ module.exports = (app, passport, user, environment) ->
       err.push requiredFields[key] if !req.body[key]?
     return res.json({ err: err.join(" ") }) if err.length > 0
 
-    i2c.updateI2CAddress sensorType, oldAddress, newAddress, (err) ->
+    debugRoutesI2c req.body
+    i2c.updateI2CAddress req.body.sensorType, req.body.oldAddress, req.body.newAddress, (err) ->
       return res.json({ err: err }) if err?
       return res.json({success: true})
   )
