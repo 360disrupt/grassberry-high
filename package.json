@@ -112,6 +112,9 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "scripts": {
+    "pack": "tar -zcvf \"../grassberry-software/latest/$(date +%Y-%m-%dT%H_%M_%S%z)\".tar.gz ./dist && open ../grassberry-software/latest"
+  },
   "prod-deploy-server-user": "pi",
   "prod-deploy-server-ip": "grassberry.local",
   "prod-deploy-server-port": 22,
