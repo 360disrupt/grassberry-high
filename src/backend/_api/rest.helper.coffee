@@ -70,12 +70,13 @@ exports.emit = (method, url, data, callback) ->
         res.on('end', () ->
           try
             data = JSON.parse(data.toString())
-            return callback "No response #{url}, #{method.toUpperCase()}" if !data?
-            return callback data.err if data.err?
-            return callback null, data
           catch err
             require('../_helper/log-error.helper.js').dumpError(err)
             return callback "Response invalid #{err}}, #{url}, #{method.toUpperCase()}"
+
+          return callback "No response #{url}, #{method.toUpperCase()}" if !data? || data == ""
+          return callback data.err if data.err?
+          return callback null, data
         )
       else
         logger.warn "Error: #{res.statusCode}, #{url}, #{method.toUpperCase()}", {data: data}
