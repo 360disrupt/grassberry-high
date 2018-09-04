@@ -36,7 +36,10 @@ exports.zipLogs = (callback)->
   path = APP_PATH + "/logs"
   commands = []
 
-  commandZip = "tar --create --gzip --file=#{path}/../logs.tar.gz #{path}"
+  commandDelteOld = "rm -f #{path}/logs.tar.gz"
+  commands.push({"name": "commandDelteOld", "command": commandDelteOld})
+
+  commandZip = "tar --create --gzip --file=#{path}/logs.tar.gz #{path}"
   commands.push({"name": "commandZip", "command": commandZip})
 
   executeCommands commands, callback
