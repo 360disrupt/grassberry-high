@@ -18,6 +18,14 @@ ObjectId = mongoose.Types.ObjectId
 
 applicationDir = '../../.tmp/serve/'
 
+environmentVariables = {
+  APP_PATH: '../../.tmp/serve'
+}
+
+
+for key, value of environmentVariables
+  process.env[key] = value
+
 
 self = @
 

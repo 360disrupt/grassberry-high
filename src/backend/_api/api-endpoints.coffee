@@ -10,4 +10,5 @@ module.exports = ()->
    license: root + '/api/v1/check-payment'
    download: root + '/api/v1/update-software'
    subscription: root + '/api/v1/subscription'
+   support: root + '/api/v1/support'
   return endpoints

@@ -11,11 +11,13 @@ debugRelais = require('debug')('relais')
 socketIoMessenger = require('../_socket-io/socket-io-messenger.js')
 logger = require('../_logger/logger.js').getLogger()
 DataLogger = require('../data-logger/data-logger.class.js')
+RuleModel = require('../rule/rule.model.js').getModel()
 dataLogger = new DataLogger()
 
 class Output
   constructor: (options) ->
     # console.info "options", options
+    that = @
     @._id = options._id || throw new Error("Id is required")
     @.label = options.label || throw new Error("Label is required")
     @.name = options.name if options.name?
@@ -23,7 +25,12 @@ class Output
     @.relaisController = options.relaisController || throw new Error("Relais controller is required")
     @.state = 0
     @.blockedBy = null
-    @.blockedTill = null
+    #outputs which have rules that block for a period after triggering are blocked default on boot to prevent e.g. water damage
+    # RuleModel.findOne({output: @._id, durationMBlocked: {$ne: null}}).select({durationMBlocked:1}).lean().exec (err, rule)->
+    #   if rule?
+    #     that.blockedTill = moment().add(rule.durationMBlocked, 'minutes')
+    #   else
+    #     that.blockedTill = null
     # logger.info "Registered Output  #{inspect options}"
     return
 

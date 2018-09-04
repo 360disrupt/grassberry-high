@@ -138,9 +138,9 @@ gulp.task('copy_server', function () {
   var notServerFilter = $.filter(['**/*', '!**/server.js']);
   return gulp.src([paths.tmp + '/serve/backend/**/*', paths.tmp + '/serve/server.js'])
     .pipe($.replace(urls.development, urls.production))
-    .pipe(jsFilter)
-    .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
-    .pipe(jsFilter.restore())
+    // .pipe(jsFilter)
+    // .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
+    // .pipe(jsFilter.restore())
     .pipe(notServerFilter)
     .pipe(gulp.dest(paths.dist + '/backend/'))
     .pipe(notServerFilter.restore())

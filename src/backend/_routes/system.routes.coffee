@@ -8,6 +8,7 @@ async = require('async')
 routesService = require("./routes.service.js")
 systemRead = require('../system/system.read.js')
 systemUpdate = require('../system/system.update.js')
+systemSupport = require('../system/system.support.js')
 shellService = require('../shell/shell.service.js')
 
 module.exports = (app, passport, user, environment) ->
@@ -64,6 +65,15 @@ module.exports = (app, passport, user, environment) ->
     ], (err)->
       return res.json({ err: err }) if (err)
       return res.json(success: success)
+  )
+
+  app.get('/sendLogs', routesService.clean, (req, res) ->
+    options = req.params.options || { }
+    systemSupport.sendLogs(options, (err) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json({status: "System report has been sent."})
+    )
   )
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return

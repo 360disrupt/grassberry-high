@@ -1,4 +1,4 @@
-APP_PATH = '/home/pi/app'
+APP_PATH = process.env.APP_PATH #'/home/pi/app'
 
 inspect = require('util').inspect
 chalk = require('chalk')
@@ -31,6 +31,28 @@ executeCommands = (commands, callback)->
     (err)->
       return callback err if err?
       return callback null, results
+
+exports.zipLogs = (callback)->
+  path = APP_PATH + "/logs"
+  commands = []
+
+  commandZip = "tar --create --gzip --file=#{path}/../logs.tar.gz #{path}"
+  commands.push({"name": "commandZip", "command": commandZip})
+
+  executeCommands commands, callback
+
+
+exports.mongoDump = (callback)->
+  path = APP_PATH + "/logs/mongo-dump"
+  commands = []
+
+  commandCreate = "mkdir -p #{path}"
+  commands.push({"name": "commandCreate", "command": commandCreate})
+
+  commandMongodump = "mongodump --host localhost --port 27017 --out #{path}/$(date +%F_%T\\\(dayOfW:%u_dayOfM:%d\\\))"
+  commands.push({"name": "commandMongodump", "command": commandMongodump})
+
+  executeCommands commands, callback
 
 exports.getWifiOptions = (callback)->
   return callback null, ['MAC OSX'] if process.env.OS == 'MAC OSX'

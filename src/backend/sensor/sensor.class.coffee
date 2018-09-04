@@ -266,9 +266,16 @@ class Sensor
         debugSensorSwitchBlockers output.name, "by", (output.blockedBy? && output.blockedBy != detector._id), "till", (output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds')), "pumpHasProp", (rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)), "nightM", (rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10), moment().hour()
         if output? && output.state != state && operation?
           return null if output.blockedBy? && output.blockedBy != detector._id
+
+          debugSensorSwitchVerbose "Output not blocked by"
+          debugSensorSwitchVerbose "Output blocked till #{moment(output.blockedTill).diff(moment(), 'seconds')}" if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds') > 0
           return null if output.blockedTill? && moment(output.blockedTill).diff(moment(), 'seconds') > 0
+          debugSensorSwitchVerbose "Output not blocked till"
+
           return null if rule.device == 'pump' && (!rule.durationMSOn? || !rule.durationMBlocked?)
-          return null if rule.nightOff? && moment().hour() >= 22 || moment().hour() <= 10
+          console.error rule.nightOff, moment().hour()
+          return null if (rule.nightOff == true) && ( moment().hour() >= 22 || moment().hour() <= 10 )
+          debugSensorSwitchVerbose "No night off/night mode"
           debugSensorSwitch "SWITCHED #{operation}"
           #if different operate the output
           outputService.operateOutput rule.output, operation, info, detector._id, (err)->
