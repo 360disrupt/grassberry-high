@@ -17,6 +17,14 @@ moment = require('moment')
 logger = require('../_logger/logger.js').getLogger()
 SystemModel = require('./system.model.js').getModel()
 CronJob = require('cron').CronJob
+EventModel = require('../data-logger/event.model.js').getModel()
+SensorDataModel = require('../data-logger/sensor-data.model.js').getModel()
+ServerLogModel = require('../_logger/server-log.model.js').getModel()
+SessionModel = require('../system/session.model.js').getModel()
+ChamberModel = require('../chamber/chamber.model.js').getModel()
+CronjobModel = require('../cronjob/cronjob.model.js').getModel()
+RuleModel = require('../rule/rule.model.js').getModel()
+
 
 shellService = require('../shell/shell.service.js')
 restHelper = require('../_api/rest.helper.js')
@@ -161,3 +169,27 @@ exports.updateSystem = (appUser, data, options, callback)->
       bootOptions = { noCrons: true }
       outputAndSensorBootHelper.bootSensorsAndOutputs bootOptions, (err)->
         return callback err, system
+
+exports.reset = (callback)->
+  #TODO: this just deletes the db data, better would be to reseed
+  async.parallel
+    chamber: (next)->
+      ChamberModel.remove({}).exec next
+    cronjobs: (next)->
+      CronjobModel.remove({}).exec next
+    rules: (next)->
+      RuleModel.remove({}).exec next
+    events: (next)->
+      EventModel.remove({}).exec next
+    sensorData: (next)->
+      SensorDataModel.remove({}).exec next
+    serverLogs: (next)->
+      ServerLogModel.remove({}).exec next
+    sessions: (next)->
+      SessionModel.remove({}).exec next
+    , (err, results)->
+      return callback err
+
+
+
+

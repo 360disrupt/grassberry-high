@@ -98,6 +98,25 @@ exports.configureWifi = (wifi, callback)->
 
   executeCommands commands, callback
 
+exports.reset = (callback)->
+  return callback "Not able to do this on #{process.env.OS}" if process.env.OS == 'MAC OSX'
+
+  commands = []
+
+  commandResetWifi = "sudo cp /etc/wpa_supplicant/wpa_supplicant.backup.conf /etc/wpa_supplicant/wpa_supplicant.conf"
+  commands.push({"name": "commandResetWifi", "command": commandResetWifi})
+
+  commandClearHistory = "history -c"
+  commands.push({"name": "commandClearHistory", "command": commandClearHistory})
+
+  commandExpandFilesystem = "bash #{__dirname}/shell/expand-filesystem.sh"
+  commands.push({"name": "commandExpandFilesystem", "command": commandExpandFilesystem})
+
+  commandReboot = "reboot"
+  commands.push({"name": "commandReboot", "command": commandReboot})
+
+  executeCommands commands, callback
+
 exports.configureDateTime = (dateTime, callback)->
   return callback "Not able to do this on #{process.env.OS}" if process.env.OS == 'MAC OSX'
   dateTime = dateTime.dateTime

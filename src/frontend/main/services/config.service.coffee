@@ -136,6 +136,33 @@ angular.module("myConfigService", []).service("configService", ($http, $rootScop
         })
       return null
 
+#---------------------------------- Reset -------------------------------------
+  @.reset = ()->
+    defer = $q.defer()
+    BootstrapDialog.confirm({
+      title: 'Do you want to reset the system?',
+      message: 'Please choose:',
+      type: BootstrapDialog.TYPE_DANGER,
+      callback: (success)->
+        if success
+          $http
+            url: "/reset"
+            method: "GET"
+          .then (response) ->
+            if response.success?
+              return success
+            else
+              BootstrapDialog.alert({
+                title: 'Reset failed',
+                message: response.data.err || '',
+                type: BootstrapDialog.TYPE_DANGER
+              })
+              return null
+        else
+          $timeout ()->
+            return defer.resolve(false)
+    })
+    return defer.promise
 
 #////////////////////////////////////////////////////////////////////
   return

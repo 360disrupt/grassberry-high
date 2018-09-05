@@ -75,6 +75,17 @@ module.exports = (app, passport, user, environment) ->
       return res.json({status: "System report has been sent."})
     )
   )
+
+  app.get('/reset', routesService.clean, routesService.onShowModeBlocked, (req, res) ->
+    async.waterfall [
+      (next)->
+        systemUpdate.reset next
+      (next)->
+        shellService.reset next
+    ], (err, success)->
+      return res.json({ err: err }) if err?
+      return res.json({ success: success }) #will never be called when raspi reboots
+  )
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return
 

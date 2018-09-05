@@ -53,6 +53,10 @@ angular.module "general", ['myConfigService', 'ngResource', 'modal']
       )
       return
 
+    @.reset = ()->
+      configService.reset().then ->
+        return
+
     @.getWifiOptions()
 #------------------------------------ time zone , date & time ---------------------------------------
     @.timeZoneOptions = []

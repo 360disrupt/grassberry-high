@@ -106,6 +106,21 @@
         </section>
 
       </form>
+
+
+      <section class="container bg-white round-card">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Factory Reset</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-red" ng-disabled="generalController.buttonDisabled == true" ng-click="generalController.reset()">Reset</button>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 </div>
