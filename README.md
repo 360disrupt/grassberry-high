@@ -154,7 +154,16 @@ for development with
 `npm add --save-dev <module>`
 
 # Prod packing
+## App Update
 1) Use `gulp stat` to pack a deployment version
 2) Upload to git repository: https://github.com/360disrupt/grassberry-high-software/blob/master/latest/
 3) Use git raw to genrate a url: https://rawgit.com/
-4) add url to DB e.g. db.getCollection('softwares').update({}, {$set: {"url": "https://cdn.rawgit.com/360disrupt/grassberry-high-software/a8c075a9/latest/2017-06-22T11_30_05%2B0200.tar.gz"}})
+4) add url to DB e.g. db.getCollection('softwares').update({}, {$set: {"url": "https://cdn.rawgit.com/360disrupt/grassberry-high-software/55b62a9a/latest/2018-09-05T11_17_44%2B0200.tar.gz", checksum: 25811432.0 , "date":ISODate("2018-09-05T00:00:00.000Z")}}))
+
+## SD image update
+1) Copy last version to SD card
+2) Deploy new app
+3) Factory Reset
+4) Copy and compress image from SD with ubuntu script (`fdsik -l`, `bash mkimg.sh <diskWithoutNumber> <yymmdd_version_prod.img>`)
+5) Upload to AWS S3 bucket
+6) Change links (webiste, DIY)
