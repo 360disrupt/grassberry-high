@@ -104,6 +104,11 @@ angular.module("mySensorService", ['ngLodash']).service("sensorService", ($http,
         sensor: sensor
     .then (response) ->
       if response.data.success?
+        BootstrapDialog.alert({
+          title: 'Sensor saved',
+          message: 'Your sensor has been saved',
+          type: BootstrapDialog.TYPE_SUCCESS
+        })
         return true
       else
         BootstrapDialog.alert({
