@@ -1,0 +1,126 @@
+<div class="sensor container-last">
+  <div class="background-image"></div>
+
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Sensor Settings</h3>
+        <p>You can add sensors to the system, these sensors can be selected in the advanced setup.</p>
+        <p></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container bg-white round-card" ng-repeat="sensor in sensorController.sensors track by $index">
+    <form name="sensorsDataForm" mark-required>
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="float-left">Sensor</h3>
+          <p class="remove"><i class="fa fa-trash-o circle-trash" ng-click="sensorController.removeSensor(sensor, $index)"></i></p>
+
+        </div>
+      </div>
+
+      <div class="row" ng-show="developer">
+        <pre ng-show="developer">{{sensor}}</pre>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-lg-4" show-errors>
+          <label>Technology</label>
+          <select class="form-control" name="technology" ng-model="sensor.technology" ng-options="technologyOption.shortName as technologyOption.longName for technologyOption in sensorController.technologyOptions" required>
+          </select>
+          <p class="help-block" ng-if="sensorsDataForm.name.$error">Please select a technology.</p>
+        </div>
+      </div>
+
+      <div class="row" ng-show="sensor.technology">
+        <div class="form-group col-lg-4" show-errors>
+          <label>Model</label>
+          <select class="form-control" name="model" ng-model="sensor.model" ng-change="sensorController.addDetectors(sensor)" ng-options="modelOption as modelOption for modelOption in sensorController.modelOptions[sensor.technology]" required>
+          </select>
+          <div class="image-wrapper">
+            <img ng-show="sensorController.images[sensor.model]" ng-src="assets/images/{{sensorController.images[sensor.model]}}" onError="angular.element(this).scope().product.img = false"/>
+          </div>
+          <p class="help-block" ng-if="sensorsDataForm.name.$error">Please specify a model for your sensor.</p>
+        </div>
+      </div>
+
+      <!-- BLE Setting -->
+      <div class="row" ng-if="sensor.technology=='ble'">
+        <div class="form-group col-lg-4" show-errors>
+          <label>UUID</label>
+          <input type="text" class="form-control" name="uuid" ng-model="sensor.uuid" placeholder="UUID" ng-minlength="3" enter-to-tab required/>
+          <p class="help-block" ng-if="sensorsDataForm.uuid.$error">Please enter the uuid for your sensor.</p>
+        </div>
+      </div>
+
+      <!-- I2C Setting -->
+      <div class="row" ng-if="sensor.technology=='i2c'">
+        <div class="form-group col-lg-4" show-errors>
+          <label>I2C-Adress</label>
+          <p><em><a href="http://blog.grassberry-high.com/build-your-own-grassberry-high/#232jumpers" target="_blank">How do I know the address?</a></em><p>
+          <input type="text" class="form-control" name="address" ng-model="sensor.address" placeholder="Adress" enter-to-tab required/>
+          <p class="help-block" ng-if="sensorsDataForm.address.$error">Please enter the address for your sensor.</p>
+        </div>
+      </div>
+
+      <!-- Detectors -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Detectors</h3>
+        </div>
+      </div>
+      <div class="row">
+        <fieldset class="col-xs-12 light-green" ng-repeat="detector in sensor.detectors track by $index">
+        <pre ng-show="developer">{{detector}}</pre>
+        <div class="row">
+          <div class="form-group col-lg-4">
+            <h4 class="float-left">{{detector.name}}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-lg-4" show-errors>
+            <label>Type</label>
+            <select class="form-control" name="type" ng-model="detector.type" ng-options="typeOption.shortName as typeOption.longName for typeOption in sensorController.typeOptions[sensor.model]" required>
+          </select>
+            <p class="help-block" ng-if="sensorsDataForm.type.$error">Please enter the type for your sensor.</p>
+          </div>
+          <div class="form-group col-lg-4" show-errors>
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" ng-model="detector.name" placeholder="Name" ng-minlength="3" enter-to-tab required/>
+            <p class="help-block" ng-if="sensorsDataForm.name.$error">Please enter the name for your sensor.</p>
+          </div>
+          <div class="form-group col-lg-2" show-errors>
+            <label>Unit</label>
+            <input type="text" class="form-control" name="unit" ng-model="detector.unit" placeholder="Unit" enter-to-tab/>
+            <p class="help-block" ng-if="sensorsDataForm.unit.$error">Please enter the unit for your sensor.</p>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-dark-ice" ng-disabled="sensorController.buttonDisabled == true" ng-click="sensorController.upsertSensor(sensor)">Save Sensor Settings</button>
+        </div>
+      </div>
+    </form>
+    <div class="row" ng-show="sensor._id">
+      <div class="col-xs-12">
+        <a href="" ng-click="sensorController.exportSensor(sensor)">Export</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container bg-white round-card">
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-dark-ice" ng-click="sensorController.addNewSensor()">addNewSensor</button>
+      </div>
+      <div class="col-xs-12">
+        <button class="btn btn-dark-ice" ngf-select ng-model="sensorController.file" ngf-multiple="false" name="file" ngf-pattern="'text/json,application/json'" ngf-accept="'text/csv,application/json'" ngf-max-size="5MB" ngf-change="sensorController.fileChanged()">Import</button>
+      </div>
+    </div>
+  </section>
+
+</div>

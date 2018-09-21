@@ -131,6 +131,27 @@ angular.module("mySensorService", ['ngLodash']).service("sensorService", ($http,
           type: BootstrapDialog.TYPE_WARNING
         })
 
+
+  @.removeSensor = (id)->
+    $http
+      url: "/removeSensor/#{id}"
+      method: "DELETE"
+    .then (response) ->
+      if response.data?.success?
+        BootstrapDialog.alert({
+          title: 'Removed Sensor',
+          message: 'Succesfuly removed sensor',
+          type: BootstrapDialog.TYPE_SUCCESS
+        })
+        return true
+      else
+        BootstrapDialog.alert({
+          title: 'Could not remove Sensor',
+          message: response.data.err,
+          type: BootstrapDialog.TYPE_DANGER
+        })
+        return false
+
   @.broadcastSensors = ()->
     $http
       url: "/broadcastSensors"
@@ -141,6 +162,10 @@ angular.module("mySensorService", ['ngLodash']).service("sensorService", ($http,
       else
         console.error "NOT WORKING", response
         return false
+
+
+  @.fillWithDummy = (sensor)->
+    return sensor
 
 #////////////////////////////////////////////////////////////////////
   return

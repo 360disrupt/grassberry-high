@@ -3,9 +3,12 @@ BAD_REQUEST = 400
 inspect = require('eyespect').inspector({maxLength: null})
 chalk = require('chalk')
 
+async = require('async')
+
 routesService = require("./routes.service.js")
 sensorService = require('../sensor/sensor.service.js')
 sensorCreateUpdate = require('../sensor/sensor.create-update.js')
+sensorDelete = require('../sensor/sensor.delete.js')
 
 module.exports = (app, passport, user, environment) ->
   # sensor routes ===============================================================
@@ -66,6 +69,19 @@ module.exports = (app, passport, user, environment) ->
         return res.json({ err: err })
       return res.json(success: true)
     )
+  )
+
+  app.delete('/removeSensor/:id', routesService.clean, (req, res) ->
+    return res.status(BAD_REQUEST).json({ err: "No sensor id" }) if !req.params.id?
+    id = req.params.id
+    async.series [
+      (next)->
+        sensorDelete.removeSensor id, {}, next
+      (next)->
+        sensorService.bootSensors {}, next
+    ], (err)->
+      return res.json({ err: err }) if err?
+      return res.json({ success: true })
   )
 
   #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

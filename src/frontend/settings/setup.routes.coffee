@@ -1,4 +1,4 @@
-angular.module "setup", ['general' , 'advanced', 'quick', 'ngResource']
+angular.module "setup", ['general' , 'advanced', 'quick', 'sensor', 'ngResource']
   .constant('statesSetup', [
     {
     name: "root.advanced",
@@ -29,5 +29,15 @@ angular.module "setup", ['general' , 'advanced', 'quick', 'ngResource']
           templateUrl: "settings/general/general.html"
           controller: "GeneralCtrl"
           controllerAs: "generalController"
+    },
+    {
+    name: "root.sensor",
+    options:
+      url: "/sensor"
+      views:
+        'container@':
+          templateUrl: "settings/sensor/sensor.html"
+          controller: "SensorCtrl"
+          controllerAs: "sensorController"
     }
   ])

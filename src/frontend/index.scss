@@ -86,6 +86,10 @@ a {
   color: black;
 }
 
+.float-left {
+  float: left;
+}
+
 @media screen and (max-width: $screen-sm) {
   .row {
     margin-left:0;
