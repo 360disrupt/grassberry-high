@@ -90,17 +90,3 @@ exports.updateSensorTimeUnit = (sensorId, newTimeUnit, options, callback) ->
   sensor = @.sensors.filter((sensor)-> sensor._id.toString() == sensorId)
   if sensor.length == 1
     sensor[0].changeSensorTimeUnit newTimeUnit, callback
-
-exports.updateDetectorName = (detectorId, newDetectorName, options, callback) ->
-  errors = []
-  errors.push new Error "DetectorId is required for this operation" if detectorId == null
-  errors.push new Error "New detector name is required for this operation" if newDetectorName == null
-  return callback errors if errors.length > 0
-  SensorModel.update({'detectors._id': detectorId}, { $set: {'detectors.$.name':  newDetectorName} }).exec (err) ->
-    return callback err
-
-exports.upsertSensor = (upsertSensor, callback)->
-  upsertSensor._id = new mongoose.mongo.ObjectID() if !upsertSensor._id
-  SensorModel.findOneAndUpdate({_id: upsertSensor._id}, _.omit(upsertSensor,'_id'), {upsert: true}).exec (err, upsertSensor) ->
-    return callback err if err?
-    return callback null, upsertSensor

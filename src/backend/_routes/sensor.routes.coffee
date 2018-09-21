@@ -5,6 +5,7 @@ chalk = require('chalk')
 
 routesService = require("./routes.service.js")
 sensorService = require('../sensor/sensor.service.js')
+sensorCreateUpdate = require('../sensor/sensor.create-update.js')
 
 module.exports = (app, passport, user, environment) ->
   # sensor routes ===============================================================
@@ -27,7 +28,7 @@ module.exports = (app, passport, user, environment) ->
 
   app.post('/upsertSensor', routesService.clean, routesService.onShowModeBlocked, (req, res) ->
     return res.status(BAD_REQUEST).json({ err: "No sensor data" }) if !req.body.sensor?
-    sensorService.upsertSensor(req.body.sensor, (err, success) ->
+    sensorCreateUpdate.upsertSensor(req.body.sensor, {}, (err, success) ->
       if (err)
         return res.json({ err: err })
       return res.json(success: success)
@@ -50,7 +51,7 @@ module.exports = (app, passport, user, environment) ->
     options = req.body.options || {}
     detectorId = req.body.detectorId
     newDetectorName = req.body.newDetectorName
-    sensorService.updateDetectorName(detectorId, newDetectorName, options, (err) ->
+    sensorCreateUpdate.updateDetectorName(detectorId, newDetectorName, options, (err) ->
       if (err)
         return res.json({ err: err })
       return res.json(success: true)
