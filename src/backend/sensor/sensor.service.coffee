@@ -30,6 +30,9 @@ addSensor = (newSensor, callback)->
   self.sensors.push newSensor
   return callback()
 
+exports.getSensorsRaw = (filterRead, options, callback)->
+  SensorModel.find().lean().exec callback
+
 exports.bootSensors = (options, callback)->
   filterRead = options.filterRead || {}
   SensorModel.find(filterRead).lean().exec (err, sensorsFound) ->

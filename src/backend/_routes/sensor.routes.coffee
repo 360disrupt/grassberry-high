@@ -17,6 +17,16 @@ module.exports = (app, passport, user, environment) ->
     )
   )
 
+  app.post('/getSensorsRaw', routesService.clean, (req, res) ->
+    filter = req.body.filter || {}
+    options = req.body.options || {}
+    sensorService.getSensorsRaw(filter, options, (err, sensors) ->
+      if (err)
+        return res.json({ err: err })
+      return res.json(sensors: sensors)
+    )
+  )
+
   app.post('/getSensors', routesService.clean, (req, res) ->
     options = req.body.options || {}
     sensorService.getSensors(options, (err, sensors) ->

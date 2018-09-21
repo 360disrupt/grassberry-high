@@ -1,7 +1,7 @@
 angular.module("mySensorService", ['ngLodash']).service("sensorService", ($http, $rootScope, $q, $log, lodash) ->
   self = @
 
-  @.getSensors = ()->
+  @.getSensors = ()-> #get sensors registered in the system
     $http
       url: "/getSensors"
       method: "POST"
@@ -11,6 +11,24 @@ angular.module("mySensorService", ['ngLodash']).service("sensorService", ($http,
       else
         BootstrapDialog.alert({
           title: 'Could not get Sensor Information',
+          message: response.data.err,
+          type: BootstrapDialog.TYPE_DANGER
+        })
+        return []
+
+  @.getSensorsRaw = (filter, options)-> #basic sensor information
+    $http
+      url: "/getSensorsRaw"
+      method: "POST"
+      data:
+        filter: filter || {}
+        options: options || {}
+    .then (response) ->
+      if response.data.sensors?
+        return response.data.sensors
+      else
+        BootstrapDialog.alert({
+          title: 'Could not get Sensors',
           message: response.data.err,
           type: BootstrapDialog.TYPE_DANGER
         })
