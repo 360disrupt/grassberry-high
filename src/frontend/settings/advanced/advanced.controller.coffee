@@ -190,7 +190,7 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
       , 1000
       return
 
-    @.upsertOutput = ()->
+    @.upsertOutput = (output)->
       outputService.upsertOutput(output).then ()->
         self.getOutputs ()->
           self.reAssignOutputs()
