@@ -1,4 +1,4 @@
-APP_PATH = process.env.APP_PATH #'/home/pi/app'
+APP_PATH = process.env.APP_PATH || '/home/pi/app/'
 
 inspect = require('util').inspect
 chalk = require('chalk')

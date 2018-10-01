@@ -136,6 +136,39 @@ angular.module("myConfigService", []).service("configService", ($http, $rootScop
         })
       return null
 
+#---------------------------------- Softwareupdate -------------------------------------
+  @.updateSoftware = (system)->
+    $http
+      url: "/updateSoftware"
+      method: "GET"
+    .then (response) ->
+      if response.success?
+        return success
+      else
+        return null
+    , (response) ->
+      if response.data.err?
+        BootstrapDialog.alert({
+          title: 'Failed to update Software',
+          message: response.data.err,
+          type: BootstrapDialog.TYPE_DANGER
+        })
+      else if response.data.warning?
+        BootstrapDialog.alert({
+          title: 'Failed to update Software',
+          message: response.data.warning,
+          type: BootstrapDialog.TYPE_WARNING
+        })
+      else if response.data.results?
+        BootstrapDialog.alert({
+          title: 'Info',
+          message: response.data.results,
+          type: BootstrapDialog.TYPE_INFO
+        })
+      return null
+
+
+
 #---------------------------------- Reset -------------------------------------
   @.reset = ()->
     defer = $q.defer()

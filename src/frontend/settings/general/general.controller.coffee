@@ -124,6 +124,10 @@ angular.module "general", ['myConfigService', 'ngResource', 'modal']
         self.system = system
         self.updateRegionTimezones()
 
+#---------------------------------- Softwareupdate -------------------------------------
+    @.updateSoftware = ()->
+      configService.updateSoftware().then ->
+        return
 
 #///////////////////////////////////////////////////////////////////
     return

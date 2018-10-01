@@ -1,7 +1,7 @@
 if process.env.OS == "MAC OSX"
   APP_PATH = __dirname + '/../../../'
 else
-  APP_PATH = '/home/pi/app/'
+  APP_PATH = process.env.APP_PATH || '/home/pi/app/'
 CRONJOB_LICENSE_PATTERN = "0 0 0 * * *"
 CRONJOB_UPDATE_PATTERN = "0 0 1 * * *"
 inspect = require('util').inspect
@@ -105,7 +105,8 @@ downloadSoftware = (update, callback)->
           stats = fs.stat path, (err, stat)->
             return callback err if err?
             debugSystem "Stat", stat
-            if stat.size < 25000000 #25mb santiy check
+            debugSystem "checksum", update.checksum
+            if stat.size != update.checksum
               fs.unlink path, (err)->
                 errMsg = "Downloaded tar does not fit checksum size, was #{stat.size} expected #{update.checksum}"
                 errMsg += "and could not unlink file #{err}" if err?
@@ -116,6 +117,7 @@ downloadSoftware = (update, callback)->
       return callback err
 
 exports.updateSoftware = (options, callback)->
+  debugSystem "Updating Software"
   async.waterfall [
     (next)->
       shellService.getSerial next
@@ -129,7 +131,7 @@ exports.updateSoftware = (options, callback)->
       debugSystem "Requesting update from #{url} with version #{version} & serial #{serial}"
       restHelper.emit method, url, data, next
     (response, next)->
-      debugSystem response
+      debugSystem "Update response", response
       if !response.payload?.update?.url?
         debugSystem "Aborting no update available"
         return next "abort"
@@ -137,12 +139,12 @@ exports.updateSoftware = (options, callback)->
       update = response.payload.update
       downloadSoftware update, next
     (update, next)->
-      debugSystem "Updating system"
+      debugSystem "Updating system new version: #{update.version}"
       SystemModel.findOneAndUpdate({}, {version: update.version}).exec (err)->
         return next err
     (next)->
       debugSystem "Deploying new version"
-      shellService.installNewVersion(next) #actually does not get called in case of success
+      shellService.installNewVersion(next) #actually does not get called in case of success becasue of reboot
   ], (err)->
     msg = null
     if err == 'abort'

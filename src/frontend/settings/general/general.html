@@ -111,6 +111,20 @@
       <section class="container bg-white round-card">
         <div class="row">
           <div class="col-xs-12">
+            <h3>Software Update</h3>
+            <p>Checks for new software versions and updates the sofware</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-red" ng-disabled="generalController.buttonDisabled == true" ng-click="generalController.updateSoftware()">Update</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="container bg-white round-card">
+        <div class="row">
+          <div class="col-xs-12">
             <h3>Factory Reset</h3>
           </div>
         </div>
