@@ -38,7 +38,7 @@
                   <p class="help-block help-block-immediately" ng-if="feedbackForm.description.$error.minlength">Please type something meaningful!</p>
                 </div>
               </div>
-              <div class="row" ng-show="feedbackController.feedback.type=='Blog' || feedbackController.feedback.type=='Forum'">
+              <div class="row" ng-if="feedbackController.feedback.type=='Blog' || feedbackController.feedback.type=='Forum'">
                 <div class="form-group col-xs-12 col-md-10" show-errors>
                   <label>Url to the Post</label>
                   <input type="text" class="form-control" name="url" ng-model="feedbackController.feedback.url" placeholder="http://some-forum/xyz" ng-minlength="3" ng-pattern="urlRegex" enter-to-tab required/>
