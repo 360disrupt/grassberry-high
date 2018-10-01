@@ -21,18 +21,30 @@
     "_id":"588a427d617fff11d79b3051",
     "label": "Relais IV",
     "name":"CFL 2X (left)",
-    "address":5
+    "address":4
   },
   {
     "_id":"588a427d617fff11d79b3052",
     "label": "Relais V",
     "name":"Ventilation (left)",
-    "address":6
+    "address":5
   },
   {
     "_id":"588a427d617fff11d79b3053",
     "label": "Relais VI",
     "name":"Watering (left)",
+    "address":6
+  },
+  {
+    "_id":"588a427d617fff11d79b3054",
+    "label": "Relais VII",
+    "name":"CO2 Valve",
     "address":7
+  },
+  {
+    "_id":"588a427d617fff11d79b3055",
+    "label": "Relais VIII",
+    "name":"Humiditor",
+    "address":8
   }
 ]
