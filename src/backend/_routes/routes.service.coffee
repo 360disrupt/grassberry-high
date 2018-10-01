@@ -1,4 +1,4 @@
-inspect = require('eyespect').inspector({maxLength: null})
+inspect = require('util').inspect
 chalk = require('chalk')
 
 sanitize = require("mongo-sanitize")

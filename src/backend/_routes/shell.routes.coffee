@@ -1,6 +1,6 @@
 BAD_REQUEST = 400
 
-inspect = require('eyespect').inspector({maxLength: null})
+inspect = require('util').inspect
 chalk = require('chalk')
 
 routesService = require("./routes.service.js")

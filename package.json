@@ -21,7 +21,6 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "express-session-rethinkdb": "git+https://github.com/360disrupt/express-session-rethinkdb.git",
-    "eyespect": "^0.1.10",
     "gulp": "^3.9.1",
     "gulp-karma": "0.0.4",
     "gulp-license-finder": "^1.0.0",
