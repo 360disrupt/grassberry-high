@@ -9,9 +9,9 @@ angular.module "quick", ['mySettingService', 'myChamberService', 'mySensorServic
     }
     @.addChamber = ()->
       BootstrapDialog.alert({
-        title: 'Not avilable in Demo Mode',
-        message: "Only available in the full version",
-        type: BootstrapDialog.TYPE_DANGER
+        title: 'In progress',
+        message: "Will be available soon",
+        type: BootstrapDialog.TYPE_INFO
       })
 
 #///////////////////////////////////////////////////////////////////

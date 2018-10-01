@@ -90,6 +90,20 @@ a {
   float: left;
 }
 
+.coming-soon {
+  z-index: 99;
+  position: fixed;
+  top: 3.4rem;
+  right: -2.1rem;
+  background: $light-orange;
+  overflow: hidden;
+  text-align: center;
+  padding: 1rem 3rem 1rem 5rem;
+  transform: rotate(30deg);
+  color: black;
+  font-weight: bold;
+}
+
 @media screen and (max-width: $screen-sm) {
   .row {
     margin-left:0;
