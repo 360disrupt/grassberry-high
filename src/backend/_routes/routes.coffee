@@ -20,6 +20,7 @@ module.exports = (app, passport, user, environment) ->
   require('./system.routes.js')(app, passport, user, environment)
   require('./subscription.routes.js')(app, passport, user, environment)
   require('./debug.routes.js')(app, passport, user, environment)
+  require('./patch.routes.js')(app, passport, user, environment)
 
 #==================================================== DEV ====================================================
 
