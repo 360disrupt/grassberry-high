@@ -142,11 +142,6 @@ angular.module("myConfigService", []).service("configService", ($http, $rootScop
       url: "/updateSoftware"
       method: "GET"
     .then (response) ->
-      if response.success?
-        return success
-      else
-        return null
-    , (response) ->
       if response.data.err?
         BootstrapDialog.alert({
           title: 'Failed to update Software',
