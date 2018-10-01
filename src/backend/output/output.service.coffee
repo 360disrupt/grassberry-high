@@ -62,9 +62,9 @@ exports.getOutputs = (options, callback)->
 exports.upsertOutput = (upsertOutput, callback)->
   upsertOutput._id = new mongoose.mongo.ObjectID() if !upsertOutput._id
   delete upsertOutput.__v
-  OutputModel.findOneAndUpdate({_id: upsertOutput._id}, _.omit(upsertOutput,'_id'), {upsert: true}).exec (err, upsertOutput) ->
+  OutputModel.findOneAndUpdate({_id: upsertOutput._id}, _.omit(upsertOutput,'_id'), {"upsert": true, "new": true}).exec (err, upsertOutput) ->
     return callback err if err?
-    self.bootOutputs ->
+    self.bootOutputs {}, ->
       return callback null, upsertOutput
 
 exports.broadcastOutputs = (callback)->
