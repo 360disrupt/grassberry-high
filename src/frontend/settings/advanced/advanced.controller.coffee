@@ -147,7 +147,7 @@ angular.module "advanced", ['mySettingService', 'myChamberService', 'mySensorSer
     @.exportChamber = (chamber)->
       name = "settings.json"
       name = chamber._id + "_" + name if chamber._id?
-      download.fromData(JSON.stringify(chamber), "application/json", name)
+      download.fromData(JSON.stringify(chamber, null, 4), "application/json", name)
 
     @.fileChanged = ()->
       reader = new FileReader()
