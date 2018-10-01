@@ -42,8 +42,6 @@ angular.module "dashboard"
       bars.push({value:offTime, type: "off"}) if offTime > 0
       return bars
 
-
-
 #=============================== CRUD ================================
     @.updateSensorTimeUnit = (chart, newTimeUnit)->
       chartService.updateSensorTimeUnit(chart, newTimeUnit)
