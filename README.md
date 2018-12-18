@@ -1,3 +1,6 @@
+# NOTICE
+This repository is going to depreceate soon. There will be two new repositories available soon! If you plan on working on this pleasse leave a msg at `hello <> grassberry-high.com
+
 # I2C Setup
 detect on raspberry pi:
 i2cdetect -y 1 (alias: checki2c)
