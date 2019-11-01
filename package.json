@@ -32,7 +32,7 @@
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.13",
     "mongo-sanitize": "^1.0.0",
-    "mongoose": "^4.10.7",
+    "mongoose": "^5.7.5",
     "mongoose-deep-populate": "^3.0.0",
     "morgan": "^1.8.2",
     "node-gyp": "^3.6.2",
