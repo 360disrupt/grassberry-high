@@ -6,7 +6,7 @@
   "dependencies": {
     "archiver": "^2.1.0",
     "async": "^2.4.1",
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^5.0.0",
     "blocked": "^1.2.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
