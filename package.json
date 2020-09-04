@@ -36,7 +36,7 @@
     "mongoose-deep-populate": "^3.0.0",
     "morgan": "^1.9.1",
     "node-gyp": "^3.6.2",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.13.1",
     "node-uuid": "^1.4.8",
     "nodemailer": "^0.7.1",
     "oclazyload": "^0.6.3",
