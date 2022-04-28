@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "dependencies": {
     "archiver": "^2.1.0",
-    "async": "^2.4.1",
+    "async": "^2.6.4",
     "bcrypt": "^0.8.5",
     "blocked": "^1.2.1",
     "bluebird": "^3.5.0",
