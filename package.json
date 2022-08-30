@@ -30,7 +30,7 @@
     "longjohn": "^0.2.11",
     "mkdirp": "^0.5.1",
     "moment": "^2.21.0",
-    "moment-timezone": "^0.5.13",
+    "moment-timezone": "^0.5.35",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^5.7.5",
     "mongoose-deep-populate": "^3.0.0",
